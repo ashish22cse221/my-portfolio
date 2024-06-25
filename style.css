@@ -266,81 +266,83 @@ span{
     justify-self:left;
     text-align:inherit;
 }
-.text-me2{
-    text-decoration: none;
-    color: white;
-    font-size: 15px;
-    justify-self:left;
-    text-align:inherit;
-}
-.headrw{
-    font-size: 30px;
-}
-#logo{
-    font-size: 40px;
-}
-.contactme{
-    margin-left: 10px;
-}
-#odr{
-    font-size: 20px;
-}
-.about-img .circle-spin{
-    position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%,-50%) rotate(0);
-    width:100%;
-    height: 100%;
-    border-radius: 50%;
-    border-top: .2rem solid var(--second-bg-color);
-    border-bottom: .2rem solid var(--second-bg-color);
-    border-left: .2rem solid black;
-    border-right: .2rem solid black;
-}
-a{
-    transition: 1s;
+.email-div {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    background-color: rgba(0, 51, 75, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
 }
 
-/* Media Queries */
+.email-div input, .email-div textarea {
+    padding: 12px;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #00feff;
+    font-family: one-text;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.email-div input:focus, .email-div textarea:focus {
+    outline: none;
+    border-color: #00feff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.email-div textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.email-div button {
+    padding: 12px 20px;
+    background-color: #00feff;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: one-text;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+.email-div button:hover {
+    background-color: #00d8d9;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.email-div button:active {
+    transform: translateY(0);
+}
+
+/* Placeholder styles */
+.email-div input::placeholder, .email-div textarea::placeholder {
+    color: rgba(0, 255, 255, 0.5);
+}
+
+/* Media query adjustments */
 @media screen and (max-width: 768px) {
-    .home-content h1 {
-        font-size: 2em;
-    }
-    .home-content h3 {
-        font-size: 1.2em;
-    }
-    .home-content p {
-        font-size: 1em;
-    }
-    .dpr, .imgdp {
-        max-width: 200px;
-    }
-    .headrw {
-        font-size: 24px;
-    }
-    #logo {
-        font-size: 30px;
-    }
-    #odr {
-        font-size: 16px;
+    .email-div {
+        max-width: 100%;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .buttons {
-        flex-direction: column;
+    .email-div input, .email-div textarea, .email-div button {
+        font-size: 14px;
     }
-    .home-content h1 {
-        font-size: 1.5em;
-    }
-    .home-content h3 {
-        font-size: 1em;
-    }
-    .home-content p {
-        font-size: 0.9em;
-    }
-    .dpr, .imgdp {
-        max-width: 150px;
+    .email-div button {
+        width: 100%;
     }
 }
