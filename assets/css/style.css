@@ -1204,10 +1204,18 @@ body::before { background-image:
   width: 120vh; height: 180vh; right: -38vh; top: -40vh; opacity: .16;
   transform: translateY(calc(var(--sy, 0) * -0.06px)) rotate(-28deg) scale(1.35);
 }
+/* F-22 blueprint sheet: zoomed in so only parts of the drawings show, tilted on a diagonal,
+   fading out toward the screen edges. Sits above the grid, below every UI component. */
 .bp--f22 {
-  --m: url("/MEDIA/bg/bp-f22.png"); --c: var(--bone);
-  width: 150vw; height: 85vw; left: -55vw; bottom: -38vw; opacity: .06;
-  transform: translateY(calc(var(--sy, 0) * -0.03px)) rotate(18deg) scale(1.25);
+  --m: url("/MEDIA/bg/f22-blueprint.png"); --c: var(--neon);
+  width: 190vw; height: calc(190vw * 1049 / 1500); left: 50%; top: 50%;
+  margin-left: -95vw; margin-top: calc(190vw * -1049 / 3000);
+  /* fixed in place: tilted and framed on the top view, never moves */
+  transform: rotate(-24deg) translate(18%, 11%);
+  will-change: auto;
+}
+@media (max-width: 760px) {
+  .bp--f22 { width: 340vw; height: calc(340vw * 1049 / 1500); margin-left: -170vw; margin-top: calc(340vw * -1049 / 3000); }
 }
 /* let the drawings show through the hero frame */
 .hero__frame { background: rgba(27, 27, 27, .78) !important; }
@@ -1237,7 +1245,7 @@ body::before { background-image:
 @media (prefers-reduced-motion: reduce) { .launch__bg { animation: none; } }
 
 .bp--f1 { opacity: .24; }
-.bp--f22 { opacity: .1; }
+.bp--f22 { opacity: .2; }
 .hero__frame { background: rgba(27, 27, 27, .7) !important; }
 
 /* =========================================================
@@ -1248,8 +1256,8 @@ body::before { background-image:
   -webkit-mask: none; mask: none; inset: 0; transform: none; animation: none;
   background: center / cover no-repeat; opacity: .3; filter: grayscale(1) contrast(1.2);
 }
-.launch__bg2, .blueprint { display: none; }
-.hero__frame { background: var(--panel) !important; }
+.launch__bg2 { display: none; }
+.hero__frame { background: rgba(27, 27, 27, .82) !important; }
 .glitch::before, .glitch::after { display: none !important; }
 
 /* green light → launch */
@@ -1320,4 +1328,205 @@ body.ready .hero__copy > :nth-child(5) { animation-delay: .48s; }
   .hero__stamp { transform: rotate(-12deg) !important; }
   .feat .feat__media img { clip-path: none; }
   .section .sec-head.reveal { opacity: 1; }
+}
+
+/* =========================================================
+   ENHANCE — blueprint camera, focus, contact grid
+   ========================================================= */
+/* vignette in viewport space, so the framed view stays crisp in the middle */
+.blueprint::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 40%, var(--bg) 100%);
+}
+/* drawing-sheet title block, bottom-left, under every UI element */
+.bp-hud {
+  position: absolute; z-index: 1; left: var(--pad, 24px); bottom: 22px;
+  display: grid; grid-template-columns: auto auto; column-gap: 10px; align-items: center;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--neon); opacity: .7;
+}
+.bp-hud__mark { grid-row: span 2; width: 22px; height: 22px; border: 1.5px solid currentColor; border-radius: 50%;
+  background: linear-gradient(currentColor, currentColor) center / 1.5px 100% no-repeat, linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat; }
+.bp-hud b { font-weight: 700; color: var(--bone); }
+.bp-hud span:last-child { color: var(--muted, #8a867f); }
+@media (max-width: 760px) { .bp-hud { display: none; } }
+
+/* visible keyboard focus everywhere: thick neon ring with an offset, brutalist not soft */
+:focus-visible { outline: 3px solid var(--neon); outline-offset: 3px; }
+.btn:focus-visible, .radio__links a:focus-visible, .nav__links a:focus-visible { outline-color: var(--bone); }
+.radio__form input:focus-visible, .radio__form textarea:focus-visible { outline: none; }
+
+/* contact links: two columns, an odd last link spans the row (no empty slab) */
+.radio__links { grid-template-columns: repeat(2, 1fr); }
+.radio__links a:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.radio__links a span { transition: transform .15s; }
+.radio__links a:hover span { transform: translate(3px, -3px); }
+
+/* =========================================================
+   ACID LIME + DE-SLOP
+   Two accents with fixed jobs:
+     blue (--neon) = structure: section slabs, hard shadows, tape, blueprint
+     lime (--lime) = action and live state: buttons, active nav, focus, "now" markers
+   ========================================================= */
+:root { --lime: #c8ff00; --ink-on-lime: #0d0d0d; }
+::selection { background: var(--lime); color: var(--ink-on-lime); }
+
+/* primary actions are lime; their hard shadow stays blue */
+.btn--red, .btn--red:hover { background: var(--lime) !important; border-color: var(--ink-on-lime) !important; color: var(--ink-on-lime) !important; box-shadow: 4px 4px 0 var(--neon); }
+.btn--red:hover { box-shadow: 6px 6px 0 var(--neon); }
+.btn--red:active { box-shadow: 1px 1px 0 var(--neon); }
+.btn--ghost:hover { background: var(--bone); color: var(--bg); box-shadow: 6px 6px 0 var(--lime); }
+
+/* where you are */
+.nav__links a.active { background: var(--lime) !important; color: var(--ink-on-lime) !important; border-color: var(--ink-on-lime) !important; }
+.nav__links a:hover:not(.active) { background: var(--bone); color: var(--bg); }
+.progress i { background: var(--lime); }
+:focus-visible { outline-color: var(--lime) !important; }
+
+/* live / now */
+.dot { background: var(--lime); box-shadow: 0 0 0 3px rgba(200, 255, 0, .18) !important; }
+.live-badge { background: var(--lime) !important; color: var(--ink-on-lime) !important; }
+.live-badge .dot { background: var(--ink-on-lime); box-shadow: none !important; }
+.spec-table dd.live { color: var(--lime); }
+.skill__bar i.on.hi { background: var(--lime) !important; }
+.gauge__needle { stroke: var(--lime); }
+.lap.current .lap__big { color: var(--lime); }
+.feat__hud b { background: var(--lime) !important; color: var(--ink-on-lime) !important; }
+.radio__links a:hover { background: var(--lime) !important; color: var(--ink-on-lime) !important; }
+.service__cta { color: var(--lime); }
+.service:hover .service__cta, .service:nth-child(even) .service__cta { color: inherit; }
+.stickers li:nth-child(7n+4) { background: var(--lime); color: var(--ink-on-lime); }
+.ticker--b { background: var(--lime) !important; color: var(--ink-on-lime) !important; }
+.ticker--b .ticker__track span::after { content: "/"; opacity: .45; }
+.radio__form input:focus, .radio__form textarea:focus { border-color: var(--lime) !important; box-shadow: 4px 4px 0 var(--lime) !important; }
+.form-status.ok { color: var(--lime); }
+
+/* hero top bar: real status instead of fake serial numbers and barcodes */
+.hero__bar {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 14px clamp(16px, 2vw, 24px); border-bottom: var(--bw, 3px) solid var(--bone);
+  font-family: var(--f-mono); font-size: 13px; letter-spacing: .02em;
+}
+.hero__live { display: inline-flex; align-items: center; gap: 10px; background: var(--lime); color: var(--ink-on-lime); padding: 6px 12px 6px 10px; font-weight: 700; }
+.hero__live .dot { background: var(--ink-on-lime); box-shadow: none !important; }
+.hero__info > span:last-child { text-transform: none; letter-spacing: 0; font-family: var(--f-race); font-size: clamp(15px, 1.3vw, 18px); }
+.hero__chip { text-transform: none; }
+
+/* section heads: one plain title on the slab, no number, script eyebrow or barcode */
+.sec-head { grid-template-columns: 1fr !important; }
+.sec-head__num, .sec-head__kick, .sec-head__bar { display: none !important; }
+
+/* drop decorative chrome that carried no information */
+.panel::after, .feat::after, .offtrack::after { content: none !important; }  /* FIG. 0X counters */
+.hand-note, .hero__stamp, .caution, .hero__ticks, .spec-card { display: none !important; }
+.launch__kick { display: none; }
+
+/* labels in sentence case: they're read, not stamped */
+.panel__tag, .sub-head span, .insta__label, .insta__sub, .radio__form label > span, .footer__row, .service__cta, .step__lap, #emailHint { text-transform: none !important; letter-spacing: .02em !important; }
+
+.hero__chip { display: block !important; }
+@media (max-width: 640px) {
+  .hero__bar { font-size: 12px; }
+  .hero__info { grid-template-columns: 1fr !important; }
+  .hero__info > * + * { border-left: 0 !important; border-top: 2px solid var(--bone); }
+}
+
+/* =========================================================
+   TOOLS — a spec plate: one row per kind of tool, shared hard rules
+   ========================================================= */
+.tools { margin: clamp(48px, 6vw, 80px) 0 clamp(36px, 4vw, 56px); border: var(--bw) solid var(--bone); background: var(--panel); box-shadow: 10px 10px 0 var(--shadow); }
+.tools__title {
+  margin: 0; padding: 12px 18px; border-bottom: var(--bw) solid var(--bone);
+  font-family: var(--f-display); font-weight: 900; font-stretch: 125%; font-variation-settings: "wdth" 125;
+  font-size: clamp(20px, 2vw, 28px); letter-spacing: -.01em; background: var(--bone); color: var(--bg);
+}
+.tools__row { display: grid; grid-template-columns: minmax(120px, 180px) 1fr; }
+.tools__row + .tools__row { border-top: 2px solid var(--line-2); }
+.tools__group {
+  display: flex; align-items: center; padding: 14px 18px;
+  font-family: var(--f-mono); font-size: 12px; font-weight: 700; color: var(--neon);
+  border-right: 2px solid var(--line-2);
+}
+.tools__row ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; }
+.tools__row li {
+  padding: 14px 20px; border-right: 2px solid var(--line-2);
+  font-family: var(--f-race); font-weight: 700; font-size: 16px; color: var(--bone);
+  transition: background .12s, color .12s;
+}
+.tools__row li:hover { background: var(--lime); color: var(--ink-on-lime); }
+@media (max-width: 640px) {
+  .tools__row { grid-template-columns: 1fr; }
+  .tools__group { border-right: 0; border-bottom: 2px solid var(--line-2); padding: 10px 14px; }
+  .tools__row li { padding: 12px 14px; font-size: 15px; border-bottom: 2px solid var(--line-2); }
+}
+
+/* =========================================================
+   INSTAGRAM — one clear row: icon, handle, what's posted, the action
+   ========================================================= */
+.ig {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: clamp(16px, 2.4vw, 32px);
+  padding: clamp(18px, 2.4vw, 28px); background: var(--panel); color: var(--bone);
+  border: var(--bw) solid var(--bone); box-shadow: 10px 10px 0 var(--shadow);
+  transition: transform .12s, box-shadow .12s;
+}
+.ig:hover { transform: translate(-3px, -3px); box-shadow: 13px 13px 0 var(--shadow); }
+.ig:active { transform: translate(4px, 4px); box-shadow: 4px 4px 0 var(--shadow); }
+.ig__icon { width: clamp(56px, 6vw, 76px); aspect-ratio: 1; display: grid; place-items: center; background: var(--neon); color: var(--bg); border: var(--bw) solid var(--bone); }
+.ig__icon svg { width: 58%; height: 58%; }
+.ig__text { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.ig__handle {
+  font-family: var(--f-display); font-weight: 900; font-stretch: 112%; font-variation-settings: "wdth" 112;
+  font-size: clamp(26px, 4vw, 54px); line-height: 1; letter-spacing: -.02em; overflow-wrap: anywhere;
+}
+#instaHandle.ig__handle { font-family: var(--f-display); } /* beats an older #instaHandle font rule */
+.ig__sub { font-size: clamp(14px, 1.2vw, 16px); color: var(--muted, #a9a49c); }
+.ig__cta {
+  padding: 12px 18px; font-family: var(--f-race); font-weight: 700; font-size: 15px; white-space: nowrap;
+  background: var(--lime); color: var(--ink-on-lime); border: 2px solid var(--ink-on-lime); box-shadow: 4px 4px 0 var(--neon);
+}
+.ig:hover .ig__cta { box-shadow: 6px 6px 0 var(--neon); }
+@media (max-width: 760px) {
+  .ig { grid-template-columns: auto 1fr; }
+  .ig__cta { grid-column: 1 / -1; text-align: center; }
+}
+
+/* =========================================================
+   FOOTER — one row on the blue band: signature, email + socials, a solid "top" block
+   ========================================================= */
+.footer {
+  --ink: #0d0d0d; color: var(--ink);
+  margin-top: clamp(60px, 7vw, 100px) !important; padding: 0 var(--pad) 16px !important;
+}
+.footer::before { margin-bottom: clamp(26px, 3vw, 38px) !important; height: 18px !important; }
+.foot { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: clamp(18px, 3vw, 48px); padding-bottom: 20px; border-bottom: 2px solid var(--ink); }
+.foot-sig {
+  font-family: var(--f-sign); font-size: clamp(40px, 4vw, 60px); line-height: 1;
+  color: var(--bone); -webkit-text-stroke: 1px var(--ink); transform: rotate(-5deg);
+}
+.foot__mid { display: flex; justify-content: space-between; align-items: center; gap: 16px 28px; flex-wrap: wrap; min-width: 0; }
+.foot-email {
+  font-family: var(--f-race); font-weight: 700; font-size: clamp(16px, 1.5vw, 21px);
+  padding: 4px 8px; margin-left: -8px; white-space: nowrap; border-bottom: 2px solid var(--ink);
+}
+.foot-email:hover { background: var(--ink); color: var(--lime); }
+.foot-social { display: flex; gap: 8px; flex-wrap: wrap; }
+.foot-social a {
+  font-family: var(--f-mono); font-size: 13px; font-weight: 700; padding: 8px 12px;
+  border: 2px solid var(--ink); transition: transform .12s, box-shadow .12s, background .12s;
+}
+.foot-social a:hover { background: var(--lime); box-shadow: 3px 3px 0 var(--ink); transform: translate(-2px, -2px); }
+.foot-top {
+  width: 64px; height: 64px; display: grid; place-content: center; justify-items: center; gap: 2px;
+  background: var(--ink); color: var(--lime); box-shadow: 5px 5px 0 var(--bone);
+  transition: transform .12s, box-shadow .12s;
+}
+.foot-top span { font-size: 24px; line-height: 1; font-weight: 700; }
+.foot-top small { font-family: var(--f-mono); font-size: 10px; font-weight: 700; }
+.foot-top:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--bone); }
+.foot-top:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 var(--bone); }
+.foot-meta { margin: 12px 0 0; font-size: 12px; }
+@media (max-width: 760px) {
+  .foot { grid-template-columns: 1fr auto; }
+  .foot__mid { grid-column: 1 / -1; grid-row: 2; flex-direction: column; align-items: flex-start; }
+  .foot-email { white-space: normal; overflow-wrap: anywhere; }
 }

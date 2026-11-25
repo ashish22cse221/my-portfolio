@@ -6,7 +6,11 @@ backend:
   branch: main
 
 # Uncomment to edit locally without logging in: run `npx decap-server` in the repo, then open /admin
-# local_backend: true
+local_backend: true  # only used on localhost; the live site still logs in with GitHub
+
+logo_url: /admin/logo.svg
+site_url: /
+display_url: /
 
 media_folder: "MEDIA/uploads"
 public_folder: "/MEDIA/uploads"

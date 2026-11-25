@@ -4,9 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
-  <title>Pit Wall · Content Manager</title>
+  <title>Content manager · Ashish Choudhury</title>
+  <link rel="icon" href="/admin/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,700..900&family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/admin/admin.css" />
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <!-- pinned: admin.css targets Decap's component names, which can change between releases -->
+  <script src="https://unpkg.com/decap-cms@3.18.0/dist/decap-cms.js"></script>
+  <script>
+    // style the live preview pane (inside its iframe) to match the site
+    CMS.registerPreviewStyle("/admin/preview.css");
+  </script>
 </body>
 </html>

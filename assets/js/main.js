@@ -96,6 +96,7 @@
   /* ---------- status bar counter ---------- */
   function runStatus() {
     const pct = $("#pct"), cells = $$(".battery i");
+    if (!pct) return;
     const dur = reduced ? 1 : 1600, t0 = performance.now();
     const step = (t) => {
       const p = Math.min(1, (t - t0) / dur), v = 100 * (1 - Math.pow(1 - p, 3));
@@ -111,7 +112,7 @@
     const p = data.profile || {};
     const values = {
       ...p,
-      statusText: p.available ? "OPEN TO PROJECTS" : "ON TRACK",
+      statusText: p.available ? "Open to projects" : "Not taking new work",
       contactHeadline: data.contact?.headline,
     };
     $$("[data-bind]").forEach((el) => {
@@ -128,12 +129,11 @@
   function renderProfile(data) {
     const p = data.profile || {}, ed = (data.education || [])[0];
     const rows = [
-      ["Race no.", `#${p.number || "—"}`],
-      ["Role", p.role],
+            ["Role", p.role],
       ["Team", p.team],
       ["Base", p.location],
       ["Class", ed ? `${ed.place.split(",")[0]} · ${ed.period}` : ""],
-      ["Status", p.available ? "● Open to projects" : "Fully booked", p.available ? "live" : ""],
+      ["Status", p.available ? "Open to projects" : "Not taking new work", p.available ? "live" : ""],
     ].filter((r) => r[1]);
     $("#specTable").innerHTML = rows.map(([k, v, c]) => `<div><dt>${esc(k)}</dt><dd class="${c || ""}">${esc(v)}</dd></div>`).join("");
     const tilt = [-6, 3, -2, 5, -4, 2, 6, -3, 4, -5, 1, -1];
@@ -149,8 +149,8 @@
 
   function linkBtns(pr, cls = "btn") {
     let out = "";
-    if (safeUrl(pr.live)) out += `<a class="${cls} btn--red" href="${esc(pr.live)}" target="_blank" rel="noopener">Live <span>↗</span></a>`;
-    if (safeUrl(pr.repo)) out += `<a class="${cls} btn--ghost" href="${esc(pr.repo)}" target="_blank" rel="noopener">Code <span>⌥</span></a>`;
+    if (safeUrl(pr.live)) out += `<a class="${cls} btn--red" href="${esc(pr.live)}" target="_blank" rel="noopener">Visit site</a>`;
+    if (safeUrl(pr.repo)) out += `<a class="${cls} btn--ghost" href="${esc(pr.repo)}" target="_blank" rel="noopener">View code</a>`;
     return out;
   }
 
@@ -158,9 +158,8 @@
     const all = data.projects || [];
     $("#featured").innerHTML = all.map((pr, i) => `
       <article class="feat reveal">
-        ${i === 0 ? `<span class="hand-note">my fav build</span>` : ""}
         <div class="feat__info">
-          <div class="feat__top"><span class="feat__pos">P${i + 1}</span><span class="feat__cat">${esc(pr.category)}</span></div>
+          <div class="feat__top"><span class="feat__cat">${esc(pr.category)}</span></div>
           <h3 class="feat__title">${esc(pr.title)}</h3>
           <p class="feat__summary">${esc(pr.summary)}</p>
           ${pr.specs?.length ? `<div class="feat__specs">${pr.specs.slice(0, 3).map((s) => `<div><span>${esc(s.label)}</span><b>${esc(s.value)}</b></div>`).join("")}</div>` : ""}
@@ -169,7 +168,7 @@
         </div>
         <a class="feat__media" ${safeUrl(pr.live) ? `href="${esc(pr.live)}" target="_blank" rel="noopener"` : ""} aria-label="${esc(pr.title)} preview">
           ${safeUrl(pr.image) ? `<img src="${esc(pr.image)}" alt="${esc(pr.title)} screenshot" loading="lazy" />` : ""}
-          <div class="feat__hud"><span><b>LIVE</b> ${esc(host(pr.live))}</span><span>CAM ${pad(i + 1)} · ONBOARD</span></div>
+          ${host(pr.live) ? `<div class="feat__hud"><span><b>Live</b> ${esc(host(pr.live))}</span></div>` : ""}
         </a>
       </article>`).join("");
   }
@@ -206,7 +205,7 @@
         <div>
           <h3 class="lap__role">${esc(x.role)}</h3>
           <p class="lap__company">${esc(x.company)}${x.location ? ` · ${esc(x.location)}` : ""}</p>
-          ${x.current ? `<span class="live-badge"><span class="dot"></span>P1 · ON TRACK</span>` : ""}
+          ${x.current ? `<span class="live-badge"><span class="dot"></span>Current role</span>` : ""}
         </div>
         <ul class="lap__points">${(x.points || []).map((pt) => `<li>${esc(pt)}</li>`).join("")}</ul>
       </li>`).join("");
@@ -249,7 +248,7 @@
     const ig = safeUrl(s.instagram);
     if (ig) {
       $("#instaLink").href = ig;
-      $("#instaHandle").textContent = (s.instagramHandle || "@instagram").toUpperCase();
+      $("#instaHandle").textContent = s.instagramHandle || "@instagram";
     } else $("#instagram").remove();
 
     $("#instaGrid").innerHTML = (data.instagramPosts || []).filter((x) => safeUrl(x.image)).map((x) => `
@@ -261,12 +260,18 @@
     ].filter((l) => l[1]);
     $("#socialLinks").innerHTML = links.map(([n, u]) => `<a href="${esc(u)}" ${u.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>${n}<span>↗</span></a>`).join("");
 
+    const foot = $("#footSocial");
+    if (foot) foot.insertAdjacentHTML("beforeend", links.filter(([n]) => n !== "Email")
+      .map(([n, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${n}</a>`).join(""));
+
     const email = s.email || "";
+    const footEmail = $("#footEmail");
+    if (footEmail && email) { footEmail.href = `mailto:${email}`; footEmail.innerHTML = esc(email).replace("@", "@<wbr>"); }
     $("#emailText").textContent = email;
     $("#emailBtn").addEventListener("click", async () => {
-      try { await navigator.clipboard.writeText(email); $("#emailHint").textContent = "COPIED TO CLIPBOARD ✓"; }
+      try { await navigator.clipboard.writeText(email); $("#emailHint").textContent = "Copied"; }
       catch { location.href = `mailto:${email}`; }
-      setTimeout(() => ($("#emailHint").textContent = "CLICK TO COPY"), 2200);
+      setTimeout(() => ($("#emailHint").textContent = "Click to copy"), 2200);
     });
 
     const resume = safeUrl(p.resume);
@@ -277,13 +282,13 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const btn = $("#sendBtn");
-      btn.disabled = true; status.className = "form-status mono"; status.textContent = "TRANSMITTING…";
+      btn.disabled = true; status.className = "form-status mono"; status.textContent = "Sending…";
       try {
         const res = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
         if (!res.ok) throw new Error(res.status);
-        form.reset(); status.classList.add("ok"); status.textContent = "COPY THAT — MESSAGE RECEIVED. I'LL RADIO BACK SOON.";
+        form.reset(); status.classList.add("ok"); status.textContent = "Message sent. I'll reply within two working days.";
       } catch {
-        status.classList.add("err"); status.textContent = `SIGNAL LOST. TRY AGAIN OR EMAIL ${email.toUpperCase()}`;
+        status.classList.add("err"); status.textContent = `Couldn't send the message. Check your connection and try again, or email ${email}.`;
       } finally { btn.disabled = false; }
     });
   }
@@ -293,8 +298,7 @@
     const words = [p.tagline, ...(p.interests || []), p.role, "Lights Out"].filter(Boolean);
     const run = words.map((w) => `<span>${esc(w)}</span>`).join("");
     $("#ticker").innerHTML = run + run;
-    const alt = ["Caution", "Hot parts", "Built not bought", "No cloud", "Solder & code", "Lap 03 in progress", "Handle with care"]
-      .map((w) => `<span>${esc(w)}</span>`).join("");
+    const alt = (data.toolbox || []).map((w) => `<span>${esc(w)}</span>`).join("");
     $("#ticker2").innerHTML = alt + alt;
   }
 
@@ -305,7 +309,6 @@
     const st = $("#stats");
     if (stats.length) st.innerHTML = stats.map((s, i) => `
       <div class="stat reveal" data-value="${esc(s.value)}">
-        <span class="stat__idx mono">S${pad(i + 1)}</span>
         <b class="stat__num">${esc(s.value)}</b>
         <span class="stat__label mono">${esc(s.label)}</span>
       </div>`).join("");
@@ -313,16 +316,15 @@
 
     $("#serviceGrid").innerHTML = (data.services || []).map((s, i) => `
       <article class="service reveal">
-        <span class="service__num">${pad(i + 1)}</span>
         <h3 class="service__title">${esc(s.title)}</h3>
         <p class="service__summary">${esc(s.summary)}</p>
         ${s.tags?.length ? `<ul class="tags">${s.tags.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
-        <a class="service__cta mono" href="#radio">BOOK THIS BUILD →</a>
+        <a class="service__cta mono" href="#radio">Ask about this</a>
       </article>`).join("");
 
     $("#processTrack").innerHTML = (data.process || []).map((s, i, a) => `
       <li class="step reveal">
-        <span class="step__lap mono">LAP ${pad(i + 1)}/${pad(a.length)}</span>
+        <span class="step__lap mono">Step ${i + 1}</span>
         <h3 class="step__title">${esc(s.title)}</h3>
         <p class="step__summary">${esc(s.summary)}</p>
         ${i === a.length - 1 ? `<span class="step__flag" aria-hidden="true"></span>` : ""}
@@ -330,13 +332,30 @@
 
     $("#trophyGrid").innerHTML = (data.trophies || []).map((s, i) => `
       <article class="trophy reveal">
-        <span class="trophy__place">P${i + 1}</span>
         <h3 class="trophy__title">${esc(s.title)}</h3>
         <p class="trophy__note">${esc(s.note)}</p>
       </article>`).join("");
 
-    const tilt = [-3, 2, -1, 3, -2, 1];
-    $("#toolbox").innerHTML = (data.toolbox || []).map((x, i) => `<li style="--r:${tilt[i % tilt.length]}deg">${esc(x)}</li>`).join("");
+    // group tools into rows by what they're for; anything unrecognised lands in "Other"
+    const TOOL_GROUPS = [
+      ["Languages", ["html", "css", "javascript", "typescript", "python", "c", "c++", "php", "java", "sql"]],
+      ["Data", ["mysql", "postgresql", "mongodb", "firebase", "sqlite"]],
+      ["Hardware", ["arduino", "esp32", "raspberry pi", "esp8266"]],
+      ["Ship", ["git", "github", "netlify", "vercel", "docker"]],
+      ["Design", ["canva", "figma", "photoshop", "illustrator"]],
+    ];
+    const rows = new Map(TOOL_GROUPS.map(([g]) => [g, []]));
+    (data.toolbox || []).forEach((t) => {
+      const hit = TOOL_GROUPS.find(([, list]) => list.includes(String(t).toLowerCase()));
+      const g = hit ? hit[0] : "Other";
+      if (!rows.has(g)) rows.set(g, []);
+      rows.get(g).push(t);
+    });
+    $("#toolbox").innerHTML = [...rows].filter(([, list]) => list.length).map(([g, list]) => `
+      <div class="tools__row">
+        <span class="tools__group">${esc(g)}</span>
+        <ul>${list.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
+      </div>`).join("");
 
     ["services", "process", "trophies"].forEach((id) => { if (!(data[id] || []).length) $(`#${id}`)?.remove(); });
   }
@@ -389,10 +408,11 @@
     $$(".reveal, .gauge").forEach((el) => io.observe(el));
 
     const links = $$(".nav__links a");
+    const sections = $$("main section[id]");
     const navIO = new IntersectionObserver((entries) => entries.forEach((en) => {
       if (en.isIntersecting) links.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === `#${en.target.id}`));
     }), { rootMargin: "-45% 0px -50% 0px" });
-    $$("main section[id]").forEach((s) => navIO.observe(s));
+    sections.forEach((s) => navIO.observe(s));
   }
 
   /* ---------- chrome: clock, menu, cursor ---------- */
@@ -405,8 +425,7 @@
       let ticking = false;
       const upd = () => {
         const max = document.documentElement.scrollHeight - innerHeight;
-        bar.style.transform = `scaleX(${max > 0 ? Math.min(1, scrollY / max) : 0})`;
-        ticking = false;
+        bar.style.transform = `scaleX(${max > 0 ? Math.min(1, scrollY / max) : 0})`;        ticking = false;
       };
       addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
       upd();
@@ -414,10 +433,14 @@
     const clock = $("#clock");
     const fmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
     const lc = $("#launchClock");
-    const tick = () => { clock.textContent = `IST ${fmt.format(new Date())}`; lc.textContent = clock.textContent; };
+    const fc = $("#footClock");
+    const tick = () => {
+      clock.textContent = `IST ${fmt.format(new Date())}`; lc.textContent = clock.textContent;
+      if (fc) fc.textContent = `${fmt.format(new Date())} in India (IST)`;
+    };
     tick(); setInterval(tick, 1000);
     const y = new Date().getFullYear();
-    $("#year").textContent = y; $("#yy").textContent = String(y).slice(-2);
+    $("#year").textContent = y;
 
     const btn = $("#menuBtn"), nav = $("#navLinks");
     btn.addEventListener("click", () => { const o = nav.classList.toggle("open"); btn.setAttribute("aria-expanded", o); });

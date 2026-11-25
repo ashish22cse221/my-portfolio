@@ -1,0 +1,152 @@
+/* =========================================================
+   Decap CMS theme — matches the portfolio
+   Hooks: Decap's emotion classes end in a readable component name
+   (css-<hash>-ToolbarContainer …). We match that name with [class*="-Name"]
+   and prefix #nc-root so we outrank Decap's own rules, which load after this file.
+   Pinned to decap-cms 3.18.0 in index.html; re-check after upgrading.
+   ========================================================= */
+:root {
+  --bg: #121212; --panel: #1b1b1b; --panel-2: #232323; --line: #2e2e2e; --line-2: #505050;
+  --bone: #f2efe8; --muted: #a19c92; --blue: #3366ff; --lime: #c8ff00; --ink: #0d0d0d;
+  --f-race: "Chakra Petch", "Arial Narrow", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, monospace;
+  --f-display: "Archivo", "Arial Black", sans-serif;
+}
+html, body { background: var(--bg) !important; color: var(--bone); font-family: var(--f-race); }
+::selection { background: var(--lime); color: var(--ink); }
+#nc-root, #nc-root input, #nc-root textarea, #nc-root button { font-family: var(--f-race); }
+#nc-root :focus-visible { outline: 3px solid var(--lime); outline-offset: 2px; }
+
+/* ---------- login screen ---------- */
+#nc-root [class*="AuthenticationPage"] { background: var(--bg) !important; }
+#nc-root [class*="AuthenticationPage"] img { width: 120px !important; height: 120px !important; }
+#nc-root [class*="LoginButton"] {
+  border-radius: 0 !important; background: var(--lime) !important; color: var(--ink) !important;
+  border: 2px solid var(--ink) !important; box-shadow: 5px 5px 0 var(--blue) !important;
+  font-family: var(--f-race) !important; font-weight: 700 !important; font-size: 15px !important; padding: 0 22px !important; height: 46px !important;
+}
+#nc-root [class*="LoginButton"]:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--blue) !important; }
+#nc-root [class*="LoginButton"] svg { fill: var(--ink) !important; }
+
+/* ---------- app header ---------- */
+#nc-root [class*="-AppHeader-"], #nc-root header[class*="-AppHeader"] {
+  background: var(--ink) !important; border-bottom: 3px solid var(--bone) !important; box-shadow: none !important;
+}
+#nc-root [class*="-AppHeaderButton"], #nc-root [class*="-AppHeaderNavLink"] {
+  color: var(--bone) !important; font-family: var(--f-mono) !important; font-weight: 700 !important; font-size: 13px !important;
+  border-radius: 0 !important; background: transparent !important;
+}
+#nc-root [class*="-AppHeaderButton"] span svg, #nc-root [class*="-AppHeaderNavLink"] span svg { fill: currentColor !important; color: currentColor !important; }
+#nc-root [class*="-AppHeaderNavLink"].active,
+#nc-root [class*="-AppHeaderNavLink"][aria-current="page"] { background: var(--lime) !important; color: var(--ink) !important; }
+#nc-root [class*="-AppHeaderButton"]:hover, #nc-root [class*="-AppHeaderNavLink"]:hover { color: var(--lime) !important; }
+
+/* ---------- cards: sidebar, collection header, entry list ---------- */
+#nc-root [class*="-SidebarContainer"],
+#nc-root [class*="-CollectionTopContainer"],
+#nc-root [class*="-ListCard-"],
+#nc-root [class*="-GridCard-"] {
+  background: var(--panel) !important; color: var(--bone) !important; border-radius: 0 !important;
+  border: 3px solid var(--bone) !important; box-shadow: 8px 8px 0 var(--blue) !important;
+}
+#nc-root [class*="-ListCard-"]:hover, #nc-root [class*="-GridCard-"]:hover { box-shadow: 10px 10px 0 var(--lime) !important; }
+#nc-root [class*="-GridCardLink"] { background: transparent !important; color: var(--bone) !important; }
+#nc-root [class*="-GridCard-"] h2, #nc-root [class*="-GridCard-"] [class*="Title"] { color: var(--bone) !important; font-family: var(--f-display) !important; font-weight: 900 !important; }
+#nc-root [class*="-SidebarHeading"], #nc-root [class*="-CollectionTopHeading"], #nc-root [class*="-ListCardTitle"] {
+  color: var(--bone) !important; font-family: var(--f-display) !important; font-weight: 900 !important; font-stretch: 115%;
+}
+#nc-root [class*="-ListCardLink"] { color: var(--bone) !important; }
+#nc-root [class*="-SidebarNavLink"] {
+  color: var(--bone) !important; border-left: 4px solid transparent !important; font-family: var(--f-mono) !important; font-weight: 700 !important;
+}
+#nc-root [class*="-SidebarNavLink"]:hover { background: var(--panel-2) !important; color: var(--lime) !important; }
+#nc-root [class*="sidebarNavLinkActive"] { background: var(--lime) !important; color: var(--ink) !important; border-left-color: var(--ink) !important; }
+#nc-root [class*="-SidebarNavLink"] svg { fill: currentColor !important; }
+#nc-root [class*="-SearchInput"] {
+  background: var(--bg) !important; color: var(--bone) !important; border: 2px solid var(--line-2) !important; border-radius: 0 !important;
+}
+#nc-root [class*="-SearchInput"]:focus { border-color: var(--lime) !important; }
+#nc-root [class*="-ViewControlsButton"] svg, #nc-root [class*="-ControlButton"] { color: var(--muted) !important; }
+#nc-root [class*="-StyledDropdownButton"] { color: var(--bone) !important; }
+
+/* ---------- editor toolbar ---------- */
+#nc-root [class*="-ToolbarContainer"] {
+  background: var(--ink) !important; border-bottom: 3px solid var(--bone) !important; box-shadow: none !important;
+}
+#nc-root [class*="-ToolbarSectionBackLink"], #nc-root [class*="-ToolbarSectionMain"], #nc-root [class*="-ToolbarSectionMeta"] { border-color: var(--line) !important; }
+#nc-root [class*="-ToolbarSectionBackLink"]:hover { background: var(--panel) !important; }
+#nc-root [class*="-BackArrow"], #nc-root [class*="-BackCollection"] { color: var(--bone) !important; font-family: var(--f-mono) !important; }
+#nc-root [class*="-BackStatus"] { font-family: var(--f-mono) !important; color: var(--lime) !important; }
+#nc-root [class*="-ToolbarButton"] {
+  border-radius: 0 !important; font-family: var(--f-race) !important; font-weight: 700 !important;
+  border: 2px solid var(--bone) !important; background: var(--panel) !important; color: var(--bone) !important;
+}
+/* the publish action is the one lime button in the editor */
+#nc-root [class*="-PublishButton"], #nc-root [class*="-ToolbarButton"][class*="green"], #nc-root [class*="DropdownButton"][class*="publish"] {
+  background: var(--lime) !important; color: var(--ink) !important; border-color: var(--ink) !important; box-shadow: 4px 4px 0 var(--blue) !important;
+}
+#nc-root [class*="-RefreshPreviewButton"] { color: var(--lime) !important; font-family: var(--f-mono) !important; }
+#nc-root [class*="-RefreshPreviewButton"] svg { fill: currentColor !important; }
+
+/* ---------- editor body ---------- */
+#nc-root [class*="-EditorContainer"], #nc-root [class*="-Editor"], #nc-root [class*="-ControlPaneContainer"] { background: var(--bg) !important; }
+#nc-root [class*="-StyledSplitPane"] { background: var(--bg) !important; border-radius: 0 !important; box-shadow: none !important; }
+#nc-root .Resizer { background: var(--line-2) !important; opacity: 1 !important; }
+#nc-root .Resizer:hover { background: var(--lime) !important; }
+#nc-root [class*="-ButtonRound"] { background: var(--panel) !important; border: 2px solid var(--bone) !important; box-shadow: 3px 3px 0 var(--blue) !important; }
+#nc-root [class*="-ButtonRound"] svg { fill: var(--bone) !important; color: var(--bone) !important; }
+
+/* fields: the label is a solid tab on top of a hard-edged box */
+#nc-root [class*="-ControlContainer"] { color: var(--bone); }
+#nc-root [class*="-FieldLabel"] {
+  background: var(--bone) !important; color: var(--ink) !important; border: 0 !important; border-radius: 0 !important;
+  font-family: var(--f-mono) !important; font-size: 11px !important; font-weight: 700 !important; letter-spacing: .02em !important; text-transform: none !important;
+}
+#nc-root [class*="-ControlContainer"]:focus-within > [class*="-FieldLabel"] { background: var(--lime) !important; }
+#nc-root [class*="-ControlContainer"] > input,
+#nc-root [class*="-ControlContainer"] > textarea,
+#nc-root [class*="-ControlContainer"] input[type="text"],
+#nc-root [class*="-ControlContainer"] input[type="number"],
+#nc-root [class*="-ControlContainer"] input:not([type]),
+#nc-root [class*="-TextControl"] {
+  background: var(--panel) !important; color: var(--bone) !important; border: 2px solid var(--line-2) !important; border-radius: 0 !important;
+  font-family: var(--f-race) !important; font-size: 15px !important;
+}
+#nc-root [class*="-ControlContainer"] input:focus,
+#nc-root [class*="-ControlContainer"] textarea:focus { border-color: var(--lime) !important; box-shadow: 4px 4px 0 var(--lime) !important; outline: none !important; }
+#nc-root [class*="-ControlHint"] { color: var(--muted) !important; font-size: 12px !important; }
+
+/* objects and lists — their wrappers have no component name, so match by position */
+#nc-root [class*="-ControlContainer"] > div,
+#nc-root [class*="-listControlItem"] > div { background-color: var(--panel) !important; border-color: var(--line-2) !important; border-radius: 0 !important; }
+#nc-root [class*="-TopBarContainer"], #nc-root [class*="-ObjectTopBar"], #nc-root [class*="-StyledListItemTopBar"], #nc-root [class*="-TopBar-"] {
+  background: var(--panel-2) !important; color: var(--bone) !important; border-radius: 0 !important; border: 2px solid var(--line-2) !important;
+}
+#nc-root [class*="-ListItem-"], #nc-root [class*="-listControlItem"] {
+  background: var(--panel) !important; color: var(--bone) !important; border-radius: 0 !important; border: 2px solid var(--line-2) !important;
+}
+#nc-root [class*="-NestedObjectLabel"] { color: var(--bone) !important; background: var(--panel) !important; border-color: var(--line-2) !important; font-family: var(--f-race) !important; font-weight: 600 !important; }
+#nc-root [class*="-ExpandButton"] svg, #nc-root [class*="-TopBarButton"] svg, #nc-root [class*="-DragIconContainer"] svg { fill: var(--bone) !important; color: var(--bone) !important; }
+#nc-root [class*="-TopBarButton"], #nc-root [class*="-ExpandButton"] { color: var(--bone) !important; }
+#nc-root [class*="-AddButton"] {
+  background: var(--lime) !important; color: var(--ink) !important; border: 2px solid var(--ink) !important; border-radius: 0 !important;
+  font-weight: 700 !important; box-shadow: 3px 3px 0 var(--blue) !important;
+}
+#nc-root [class*="-AddButton"] svg { fill: var(--ink) !important; }
+
+/* file / image widgets */
+#nc-root [class*="-FileWidgetButton"] { border-radius: 0 !important; background: var(--bone) !important; color: var(--ink) !important; font-weight: 700 !important; }
+#nc-root [class*="-FileWidgetButtonRemove"] { background: #ff4d4d !important; color: var(--ink) !important; }
+#nc-root [class*="-ImageWrapper"] { border: 2px solid var(--line-2) !important; border-radius: 0 !important; }
+
+/* boolean toggle: lime when on */
+#nc-root [class*="-ToggleBackground"] { border-radius: 0 !important; }
+#nc-root [class*="-ToggleHandle"] { border-radius: 0 !important; }
+#nc-root [class*="-StyledToggle"][aria-checked="true"] [class*="-ToggleBackground"] { background: var(--lime) !important; }
+
+/* preview pane frame */
+#nc-root [class*="-PreviewPaneContainer"]:not([class*="ControlPane"]) { background: var(--panel) !important; }
+#nc-root [class*="-PreviewPaneFrame"] { background: var(--panel) !important; }
+
+/* toasts */
+.Toastify__toast { border-radius: 0 !important; font-family: var(--f-race) !important; border: 2px solid var(--ink); }

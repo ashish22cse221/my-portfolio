@@ -26,7 +26,7 @@
       <span id="launchClock">IST --:--:--</span>
     </div>
     <div class="launch__stage">
-      <h1 class="launch__title"><span class="launch__kick">The Driver</span><span class="fit giant" data-bind="tagline">HYPER-XZ</span></h1>
+      <h1 class="launch__title"><span class="fit giant" data-bind="tagline">HYPER-XZ</span></h1>
     </div>
     <div class="launch__bottom">
       <div class="launch__who">
@@ -61,6 +61,10 @@
     <p class="loader__text mono" id="loaderText">FORMATION LAP</p>
   </div>
 
+  <div class="blueprint" aria-hidden="true">
+    <div class="bp bp--f22"></div>
+    <div class="bp-hud"><span class="bp-hud__mark"></span><b id="bpView">Top view</b><span>F-22 · sheet 1 of 1</span></div>
+  </div>
   <div class="grain" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"><span></span></div>
 
@@ -72,13 +76,12 @@
       <span class="nav__num mono" data-bind="number" data-prefix="#">#23</span>
     </a>
     <nav class="nav__links" id="navLinks">
-      <a href="#profile"><i>01</i>Profile</a>
-      <a href="#garage"><i>02</i>Garage</a>
-      <a href="#services"><i>03</i>Services</a>
-      <a href="#pitlog"><i>05</i>Pit Log</a>
-      <a href="#trophies"><i>06</i>Trophies</a>
-      <a href="#telemetry"><i>07</i>Telemetry</a>
-      <a href="#radio"><i>08</i>Pit Radio</a>
+      <a href="#profile">About</a>
+      <a href="#garage">Projects</a>
+      <a href="#services">Services</a>
+      <a href="#pitlog">Experience</a>
+      <a href="#telemetry">Skills</a>
+      <a href="#radio">Contact</a>
     </nav>
     <div class="nav__status mono">
       <span class="dot"></span><span id="clock">--:--:--</span>
@@ -92,22 +95,9 @@
       <div class="hero__frame">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
 
-        <div class="hero__strip">
-          <div class="label label--red">
-            <div class="label__head"><b>AC—23</b><span class="label__ring"></span></div>
-            <p class="mono">DRIVER DATABASE<br />RAW DATA · BUILD 2026</p>
-            <div class="barcode" data-code="ASHISHCHOUDHURY"></div>
-            <p class="mono tiny">MADE IN ODISHA, INDIA</p>
-          </div>
-          <div class="statusbar">
-            <span class="battery"><i></i><i></i><i></i><i></i><i></i></span>
-            <span class="statusbar__text">MOVEMENT</span>
-            <span class="statusbar__pct mono" id="pct">0.0%</span>
-          </div>
-          <div class="label label--red label--wide">
-            <p class="mono">SER: AC23-CSE-26 · <span data-bind="team">ALPHAION</span><br />STATUS: <span data-bind="statusText">ON TRACK</span></p>
-            <div class="barcode" data-code="CORESOFTWAREDEV"></div>
-          </div>
+        <div class="hero__bar">
+          <span class="hero__live"><span class="dot"></span><span data-bind="statusText">Open to projects</span></span>
+          <span>Based in <span data-bind="location">Odisha, India</span></span>
         </div>
 
         <h1 class="hero__name">
@@ -115,9 +105,8 @@
         </h1>
 
         <div class="hero__info">
-          <span class="hero__chip" data-bind="role">Core Software Developer</span>
-          <span>IOT — WEB — DESIGN</span>
-          <span class="hide-sm">AC© <span id="yy">26</span></span>
+          <span class="hero__chip"><span data-bind="role">Core Software Developer</span>&nbsp;at&nbsp;<span data-bind="team">Alphaion</span></span>
+          <span>I build IoT hardware, web apps and the interfaces in between.</span>
         </div>
 
         <div class="hero__body">
@@ -128,26 +117,15 @@
               <p class="codename__name" data-bind="tagline" data-text="HYPER-XZ">HYPER-XZ</p>
             </div>
             <div class="hero__ctas">
-              <a href="#garage" class="btn btn--red">Enter the garage <span>→</span></a>
-              <a href="#radio" class="btn btn--ghost">Pit radio</a>
-            </div>
-            <div class="caution mono"><b>⚠</b> CAUTION · HOT PARTS · AUTHORISED BUILDERS ONLY</div>
-            <div class="hero__ticks mono">
-              <span>GAMING</span><span>CARS</span><span>BIKES</span><span>ANIME</span><span>F1</span>
+              <a href="#garage" class="btn btn--red">See my projects</a>
+              <a href="#radio" class="btn btn--ghost">Get in touch</a>
             </div>
           </div>
           <div class="hero__visual">
             <span class="hero__bignum outline" data-bind="number">23</span>
-            <span class="hero__stamp">Certified Builder</span>
             <figure class="duotone">
               <img data-bind-src="photo" src="/MEDIA/me/dp.jpg" alt="Portrait of Ashish Choudhury" />
             </figure>
-            <div class="spec-card">
-              <div class="spec-card__row"><span>PRODUCT</span><span>DEVELOPER</span></div>
-              <div class="spec-card__row"><span>TEAM</span><span data-bind="team">ALPHAION</span></div>
-              <div class="spec-card__row"><span>BASE</span><span data-bind="location">ODISHA</span></div>
-              <div class="barcode" data-code="AC23"></div>
-            </div>
           </div>
         </div>
 
@@ -169,28 +147,26 @@
     <!-- 01 PROFILE -->
     <section class="section" id="profile">
       <header class="sec-head reveal">
-        <span class="sec-head__num mono">01 /</span>
-        <div><span class="sec-head__kick">The Driver</span><h2 class="sec-head__title" data-text="DRIVER PROFILE">DRIVER PROFILE</h2></div>
-        <div class="barcode sec-head__bar" data-code="PROFILE"></div>
+        <h2 class="sec-head__title" data-text="About">About</h2>
       </header>
 
       <div class="profile">
         <div class="profile__sheet panel reveal">
-          <div class="panel__tag mono">SPEC SHEET · AC-23</div>
+          <div class="panel__tag mono">Quick facts</div>
           <p class="profile__about" data-bind="about"></p>
           <dl class="spec-table" id="specTable"></dl>
         </div>
         <div class="profile__side">
           <div class="panel panel--wall reveal">
-            <div class="panel__tag mono">STICKER BOMB · CLICK ONE</div>
+            <div class="panel__tag mono">Things I'm into</div>
             <ul class="stickers" id="interests"></ul>
           </div>
           <figure class="offtrack reveal">
             <img data-bind-src="photo2" src="/MEDIA/me/redbull.jpg" alt="Ashish at a Red Bull F1 showcase" loading="lazy" />
-            <figcaption><span data-bind="photo2Caption">Red Bull showcase</span><small>// PIT LANE VISIT</small></figcaption>
+            <figcaption><span data-bind="photo2Caption">Red Bull showcase</span></figcaption>
           </figure>
           <div class="panel reveal">
-            <div class="panel__tag mono">PADDOCK CREDENTIALS</div>
+            <div class="panel__tag mono">Education and certifications</div>
             <div id="credentials" class="creds"></div>
           </div>
         </div>
@@ -200,9 +176,7 @@
     <!-- 02 GARAGE -->
     <section class="section" id="garage">
       <header class="sec-head reveal">
-        <span class="sec-head__num mono">02 /</span>
-        <div><span class="sec-head__kick">The Builds</span><h2 class="sec-head__title" data-text="THE GARAGE">THE GARAGE</h2></div>
-        <div class="barcode sec-head__bar" data-code="GARAGE"></div>
+        <h2 class="sec-head__title" data-text="Projects">Projects</h2>
       </header>
       <div id="featured" class="featured"></div>
     </section>
@@ -210,9 +184,7 @@
     <!-- 03 SERVICES -->
     <section class="section" id="services">
       <header class="sec-head reveal">
-        <span class="sec-head__num mono">03 /</span>
-        <div><span class="sec-head__kick">The Menu</span><h2 class="sec-head__title" data-text="BUILD MENU">BUILD MENU</h2></div>
-        <div class="barcode sec-head__bar" data-code="SERVICES"></div>
+        <h2 class="sec-head__title" data-text="Services">Services</h2>
       </header>
       <div id="serviceGrid" class="services"></div>
     </section>
@@ -220,9 +192,7 @@
     <!-- 04 PROCESS -->
     <section class="section" id="process">
       <header class="sec-head reveal">
-        <span class="sec-head__num mono">04 /</span>
-        <div><span class="sec-head__kick">The Strategy</span><h2 class="sec-head__title" data-text="RACE STRATEGY">RACE STRATEGY</h2></div>
-        <div class="barcode sec-head__bar" data-code="PROCESS"></div>
+        <h2 class="sec-head__title" data-text="How I work">How I work</h2>
       </header>
       <ol id="processTrack" class="process"></ol>
     </section>
@@ -230,9 +200,7 @@
     <!-- 05 PIT LOG -->
     <section class="section" id="pitlog">
       <header class="sec-head reveal">
-        <span class="sec-head__num mono">05 /</span>
-        <div><span class="sec-head__kick">The Laps</span><h2 class="sec-head__title" data-text="PIT LOG">PIT LOG</h2></div>
-        <div class="barcode sec-head__bar" data-code="EXPERIENCE"></div>
+        <h2 class="sec-head__title" data-text="Experience">Experience</h2>
       </header>
       <ol id="timeline" class="timeline"></ol>
     </section>
@@ -240,9 +208,7 @@
     <!-- 06 TROPHIES -->
     <section class="section" id="trophies">
       <header class="sec-head reveal">
-        <span class="sec-head__num mono">06 /</span>
-        <div><span class="sec-head__kick">The Silverware</span><h2 class="sec-head__title" data-text="TROPHY CABINET">TROPHY CABINET</h2></div>
-        <div class="barcode sec-head__bar" data-code="TROPHIES"></div>
+        <h2 class="sec-head__title" data-text="Achievements">Achievements</h2>
       </header>
       <div id="trophyGrid" class="trophies"></div>
     </section>
@@ -250,49 +216,51 @@
     <!-- 07 TELEMETRY -->
     <section class="section" id="telemetry">
       <header class="sec-head reveal">
-        <span class="sec-head__num mono">07 /</span>
-        <div><span class="sec-head__kick">The Data</span><h2 class="sec-head__title" data-text="TELEMETRY">TELEMETRY</h2></div>
-        <div class="barcode sec-head__bar" data-code="SKILLS"></div>
+        <h2 class="sec-head__title" data-text="Skills">Skills</h2>
       </header>
       <div id="gauges" class="gauges"></div>
       <div id="skills" class="skills"></div>
-      <div class="sub-head mono reveal"><span>// TOOLBOX</span><i></i></div>
-      <ul id="toolbox" class="toolbox"></ul>
+      <div class="tools reveal">
+        <h3 class="tools__title">Tools I use</h3>
+        <div id="toolbox" class="tools__rows"></div>
+      </div>
     </section>
 
     <!-- INSTAGRAM -->
     <section class="section section--tight" id="instagram">
-      <a class="insta reveal" id="instaLink" href="#" target="_blank" rel="noopener">
-        <span class="insta__label mono">FOLLOW THE BUILD ↗</span>
-        <span class="fit giant giant--outline" id="instaHandle">@ASHISH_23.01</span>
-        <span class="insta__sub mono">CARS · BIKES · DESIGN · BEHIND THE SCENES</span>
+      <a class="ig reveal" id="instaLink" href="#" target="_blank" rel="noopener">
+        <span class="ig__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </span>
+        <span class="ig__text">
+          <span class="ig__handle" id="instaHandle">@ashish_23.01</span>
+          <span class="ig__sub">Cars, bikes, design and work in progress.</span>
+        </span>
+        <span class="ig__cta">Follow on Instagram</span>
       </a>
       <div id="instaGrid" class="insta-grid"></div>
     </section>
 
-    <!-- 05 PIT RADIO -->
+    <!-- CONTACT -->
     <section class="section" id="radio">
       <header class="sec-head reveal">
-        <span class="sec-head__num mono">08 /</span>
-        <div><span class="sec-head__kick">The Line</span><h2 class="sec-head__title" data-text="PIT RADIO">PIT RADIO</h2></div>
-        <div class="barcode sec-head__bar" data-code="CONTACT"></div>
+        <h2 class="sec-head__title" data-text="Contact">Contact</h2>
       </header>
       <div class="radio">
         <div class="radio__left reveal">
           <p class="radio__headline" data-bind="contactHeadline">Got a build in mind?</p>
           <button class="radio__email" id="emailBtn" type="button">
             <span id="emailText">email</span>
-            <small class="mono" id="emailHint">CLICK TO COPY</small>
+            <small class="mono" id="emailHint">Click to copy</small>
           </button>
           <div class="radio__links" id="socialLinks"></div>
-          <a class="btn btn--red btn--block" id="resumeBtn" href="#" download hidden>Download spec sheet (resume) <span>↓</span></a>
+          <a class="btn btn--red btn--block" id="resumeBtn" href="#" download hidden>Download résumé (PDF)</a>
         </div>
         <form class="radio__form panel reveal" id="radioForm" method="POST">
-          <div class="panel__tag mono">TRANSMIT · CH-23</div>
-          <label><span class="mono">CALLSIGN</span><input name="name" required autocomplete="name" placeholder="Your name" /></label>
-          <label><span class="mono">FREQUENCY (EMAIL)</span><input name="email" type="email" required autocomplete="email" placeholder="you@domain.com" /></label>
-          <label><span class="mono">MESSAGE</span><textarea name="message" rows="5" required placeholder="Tell me about the project…"></textarea></label>
-          <button class="btn btn--red btn--block" type="submit" id="sendBtn">Send transmission <span>⚡</span></button>
+          <label><span class="mono">Name</span><input name="name" required autocomplete="name" placeholder="Your name" /></label>
+          <label><span class="mono">Email</span><input name="email" type="email" required autocomplete="email" placeholder="you@domain.com" /></label>
+          <label><span class="mono">Message</span><textarea name="message" rows="5" required placeholder="What are you building, and when do you need it?"></textarea></label>
+          <button class="btn btn--red btn--block" type="submit" id="sendBtn">Send message</button>
           <p class="form-status mono" id="formStatus" role="status"></p>
         </form>
       </div>
@@ -300,13 +268,15 @@
   </main>
 
   <footer class="footer">
-    <span class="fit giant giant--outline">LIGHTS OUT</span>
-    <span class="signature">Ashish</span>
-    <div class="footer__row mono">
-      <span>© <span id="year">2026</span> ASHISH CHOUDHURY</span>
-      <span class="hide-sm">DESIGNED &amp; BUILT IN-HOUSE · NO PIT STOPS</span>
-      <a href="#top">BACK TO GRID ↑</a>
+    <div class="foot">
+      <span class="foot-sig">Ashish</span>
+      <div class="foot__mid">
+        <a class="foot-email" id="footEmail" href="#radio">Email</a>
+        <nav class="foot-social" id="footSocial" aria-label="Social links"></nav>
+      </div>
+      <a class="foot-top" href="#top" aria-label="Back to top"><span aria-hidden="true">↑</span><small>Top</small></a>
     </div>
+    <p class="foot-meta mono">© <span id="year">2026</span> Ashish Choudhury, <span data-bind="location">Odisha, India</span></p>
   </footer>
 
   <script src="/assets/js/main.js" defer></script>
