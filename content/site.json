@@ -1,0 +1,335 @@
+{
+  "profile": {
+    "firstName": "Ashish",
+    "lastName": "Choudhury",
+    "katakana": "アシシュ・チョウドリー",
+    "number": "23",
+    "role": "Core Software Developer",
+    "team": "Alphaion",
+    "tagline": "HYPER-XZ",
+    "about": "Software developer from Odisha, India, working where IoT, web and design meet. By day I build core features at Alphaion; after hours I wire up robots, design interfaces and geek out over F1, Hot Wheels, Marvel, BattleBots, comics and memes. Basically a kid with a soldering iron and a race number.",
+    "location": "Odisha, India",
+    "photo": "/MEDIA/me/dp.jpg",
+    "resume": "",
+    "available": true,
+    "interests": [
+      "F1",
+      "Cars",
+      "Bikes",
+      "Hot Wheels",
+      "Robotics",
+      "BattleBots",
+      "Marvel",
+      "Superheroes",
+      "Comics",
+      "Logos",
+      "Toys",
+      "Memes",
+      "Cartoon Series",
+      "Gaming",
+      "Anime",
+      "Design",
+      "IoT"
+    ],
+    "photo2": "/MEDIA/me/redbull.jpg",
+    "photo2Caption": "Red Bull showcase"
+  },
+  "socials": {
+    "email": "ashishchoudhurylps123@gmail.com",
+    "instagram": "https://www.instagram.com/ashish_23.01/",
+    "instagramHandle": "@ashish_23.01",
+    "github": "https://github.com/ashish22cse221",
+    "linkedin": "https://www.linkedin.com/in/ashish-choudhury-416b1825b/"
+  },
+  "experience": [
+    {
+      "company": "Alphaion",
+      "role": "Core Software Developer",
+      "start": "2025",
+      "end": "Present",
+      "current": true,
+      "location": "Remote / India",
+      "points": [
+        "Develop and maintain core features for Alphaion's web and internal applications.",
+        "Integrate APIs and keep communication between system modules smooth; fix bugs and improve stability.",
+        "Build landing pages, dashboards and automation workflows with product, design and marketing teams.",
+        "Drive product metrics through data-driven improvements, code reviews and innovation sprints."
+      ]
+    },
+    {
+      "company": "Alphaion",
+      "role": "Web Developer Intern",
+      "start": "May 2025",
+      "end": "Jun 2025",
+      "current": false,
+      "location": "India",
+      "points": [
+        "Helped develop and optimize core application modules to improve performance.",
+        "Fixed bugs, integrated APIs and improved workflow efficiency with the dev team.",
+        "Supported testing, documentation and deployment for smooth delivery."
+      ]
+    },
+    {
+      "company": "Hindustan Aeronautics Limited (HAL)",
+      "role": "Software Engineer Trainee",
+      "start": "Jun 2023",
+      "end": "Aug 2023",
+      "current": false,
+      "location": "India",
+      "points": [
+        "Led the build of a Smart Networking Email Transmission System — 30% better interdepartmental communication.",
+        "Worked in a 5-member cross-functional team to analyse bottlenecks and design the solution.",
+        "Implemented secure data-handling protocols compliant with industry standards."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "HyperBot",
+      "category": "Desk Robot · IoT",
+      "featured": true,
+      "summary": "A palm-sized desk robot with a pixel face. It yawns, winks, sulks and lights up when you poke it — all controlled from your phone. No cloud.",
+      "image": "/MEDIA/projects/hyperbot.jpg",
+      "live": "https://hyperbot-desk.netlify.app/",
+      "repo": "",
+      "tags": [
+        "ESP32-C3",
+        "OLED",
+        "Bluetooth",
+        "Mobile App"
+      ],
+      "specs": [
+        {
+          "label": "MCU",
+          "value": "ESP32-C3"
+        },
+        {
+          "label": "Display",
+          "value": "0.96\" OLED"
+        },
+        {
+          "label": "Link",
+          "value": "Bluetooth"
+        }
+      ]
+    },
+    {
+      "title": "Apex Dash",
+      "category": "F1 Dashboard · Hardware",
+      "featured": true,
+      "summary": "My own F1 command cockpit — race schedules, championship standings, qualifying pace and winners, paired with a physical hardware dash.",
+      "image": "/MEDIA/projects/apexdash.jpg",
+      "live": "https://apexdashf1.netlify.app/",
+      "repo": "",
+      "tags": [
+        "JavaScript",
+        "Jolpica F1 API",
+        "Hardware",
+        "IoT"
+      ],
+      "specs": [
+        {
+          "label": "Type",
+          "value": "Web + Hardware"
+        },
+        {
+          "label": "Data",
+          "value": "Live F1 API"
+        },
+        {
+          "label": "Status",
+          "value": "Deployed"
+        }
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "HTML / CSS",
+      "level": 92,
+      "group": "Web"
+    },
+    {
+      "name": "JavaScript",
+      "level": 85,
+      "group": "Web"
+    },
+    {
+      "name": "PHP / MySQL",
+      "level": 70,
+      "group": "Web"
+    },
+    {
+      "name": "Python",
+      "level": 75,
+      "group": "Code"
+    },
+    {
+      "name": "C + DSA",
+      "level": 78,
+      "group": "Code"
+    },
+    {
+      "name": "Arduino / ESP32",
+      "level": 85,
+      "group": "IoT"
+    },
+    {
+      "name": "UI / UX Design",
+      "level": 88,
+      "group": "Design"
+    },
+    {
+      "name": "Canva",
+      "level": 95,
+      "group": "Design"
+    }
+  ],
+  "education": [
+    {
+      "title": "B.Tech, Computer Science & Engineering",
+      "place": "GIET University, Odisha",
+      "period": "2022 – 2026",
+      "note": "8.1 / 10 CGPA"
+    }
+  ],
+  "certifications": [
+    "Data Structures & Algorithms in C — Udemy",
+    "Gold Badges in C, Python & Problem Solving — HackerRank"
+  ],
+  "positions": [
+    "Design & Social Lead — SARS (Student Association for Robotics Science)",
+    "Core Member — WebEye",
+    "Represented GIET at IIT Kharagpur robotics event",
+    "Represented GIET at IIT Bhubaneswar robotics competitions"
+  ],
+  "instagramPosts": [],
+  "contact": {
+    "formEndpoint": "https://formspree.io/f/xqazzgoz",
+    "headline": "Got a build in mind?"
+  },
+  "launch": {
+    "kicker": "DRIVER // AC-23 // BUILD 2026",
+    "button": "Ignite"
+  },
+  "stats": [
+    {
+      "value": "3",
+      "label": "Roles on track"
+    },
+    {
+      "value": "9+",
+      "label": "Builds shipped"
+    },
+    {
+      "value": "2",
+      "label": "IIT robotics events"
+    },
+    {
+      "value": "8.1",
+      "label": "CGPA · B.Tech CSE"
+    }
+  ],
+  "services": [
+    {
+      "title": "Web Apps & Sites",
+      "summary": "Fast, responsive sites and web apps — from landing pages to internal dashboards.",
+      "tags": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "PHP"
+      ]
+    },
+    {
+      "title": "IoT & Hardware",
+      "summary": "ESP32 / Arduino builds with sensors and displays, plus the apps that drive them.",
+      "tags": [
+        "ESP32",
+        "Arduino",
+        "Bluetooth",
+        "Sensors"
+      ]
+    },
+    {
+      "title": "Live Dashboards",
+      "summary": "Real-time data UIs wired to live APIs — the Apex Dash treatment for your data.",
+      "tags": [
+        "APIs",
+        "Charts",
+        "Automation"
+      ]
+    },
+    {
+      "title": "UI / UX & Graphics",
+      "summary": "Interfaces, posters, logos and social graphics that look the part.",
+      "tags": [
+        "UI/UX",
+        "Canva",
+        "Branding"
+      ]
+    }
+  ],
+  "process": [
+    {
+      "title": "Brief",
+      "summary": "Goals, constraints, deadline. What does winning look like?"
+    },
+    {
+      "title": "Blueprint",
+      "summary": "Wireframes, parts list and architecture before a line of code."
+    },
+    {
+      "title": "Build",
+      "summary": "Code and hardware, shipped in visible laps you can test."
+    },
+    {
+      "title": "Test",
+      "summary": "Break it before your users do. Fix, tune, repeat."
+    },
+    {
+      "title": "Launch",
+      "summary": "Deploy, document and hand over the keys."
+    }
+  ],
+  "trophies": [
+    {
+      "title": "IIT Kharagpur",
+      "note": "Robotics event — represented GIET University"
+    },
+    {
+      "title": "IIT Bhubaneswar",
+      "note": "Robotics competitions — represented GIET University"
+    },
+    {
+      "title": "HackerRank Gold",
+      "note": "Gold badges in C, Python & Problem Solving"
+    },
+    {
+      "title": "DSA in C",
+      "note": "Certified — Udemy"
+    },
+    {
+      "title": "Design & Social Lead",
+      "note": "SARS — Student Association for Robotics Science"
+    },
+    {
+      "title": "+30% comms speed",
+      "note": "Smart email transmission system at HAL"
+    }
+  ],
+  "toolbox": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Python",
+    "C",
+    "PHP",
+    "MySQL",
+    "Arduino",
+    "ESP32",
+    "Git",
+    "Netlify",
+    "Canva"
+  ]
+}

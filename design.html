@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en" data-theme="hazard">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>HYPER-XZ · UI Design Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,700..900&family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,600;1,700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+JP:wght@700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <style>
+    .board { max-width: 1400px; margin: 0 auto; padding: 40px var(--pad) 120px; position: relative; z-index: 1; }
+    .b-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 20px; border-bottom: 1px solid var(--line-2); padding-bottom: 18px; }
+    .b-head h1 { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: clamp(40px, 8vw, 120px); line-height: 1; text-shadow: var(--glow); }
+    .b-head p { margin: 0; font-family: var(--f-mono); font-size: 11px; color: var(--muted); text-align: right; letter-spacing: .14em; }
+    .b-sec { margin-top: 90px; }
+    .b-label { display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px; border-bottom: 1px solid var(--line-2); padding-bottom: 10px; }
+    .b-label .kicker { font-family: var(--f-black); font-size: 30px; color: var(--magenta); text-shadow: 0 0 14px rgba(255,43,214,.5); }
+    .b-label h2 { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: clamp(22px, 3vw, 40px); }
+    .b-label .num { font-family: var(--f-mono); font-size: 12px; color: var(--neon); margin-left: auto; }
+
+    /* palette */
+    .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    @media (max-width: 700px) { .swatches { grid-template-columns: repeat(2, 1fr); } }
+    .sw { border: 1px solid var(--line-2); background: var(--panel); }
+    .sw i { display: block; height: 110px; }
+    .sw div { padding: 10px 12px; font-family: var(--f-mono); font-size: 11px; display: grid; gap: 2px; }
+    .sw b { font-family: var(--f-head); font-weight: 400; font-size: 15px; letter-spacing: .03em; }
+    .sw span { color: var(--muted); }
+
+    /* type specimens */
+    .specimens { display: grid; gap: 1px; background: var(--line-2); border: 1px solid var(--line-2); }
+    .spec { background: var(--panel); display: grid; grid-template-columns: 260px 1fr; }
+    .spec__meta { padding: 22px; border-right: 1px solid var(--line-2); display: grid; gap: 8px; align-content: start; }
+    .spec__meta b { font-family: var(--f-head); font-weight: 400; font-size: 20px; }
+    .spec__meta .role { font-family: var(--f-mono); font-size: 10px; color: var(--neon); letter-spacing: .16em; }
+    .spec__meta p { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.45; }
+    .spec__meta .lic { font-family: var(--f-mono); font-size: 9px; color: #6b5f8a; letter-spacing: .08em; }
+    .spec__demo { padding: 26px 30px; display: grid; align-content: center; gap: 10px; overflow: hidden; }
+    .spec__demo .big { font-size: clamp(40px, 6vw, 92px); line-height: 1; white-space: nowrap; }
+    .spec__demo .small { font-size: 22px; color: var(--muted); }
+
+    /* hierarchy demo */
+    .hier { border: 1px solid var(--line-2); padding: 40px; background:
+      radial-gradient(60% 80% at 90% 10%, rgba(176,38,255,.18), transparent 60%), var(--panel); }
+    .hier .kick { font-family: var(--f-black); font-size: 36px; color: var(--magenta); text-shadow: 0 0 16px rgba(255,43,214,.5); }
+    .hier h3 { margin: 4px 0 6px; font-family: var(--f-display); font-weight: 400; font-size: clamp(36px, 6vw, 84px); line-height: 1; text-shadow: 0 0 26px rgba(176,38,255,.5); }
+    .hier .sub { font-family: var(--f-head); font-size: 26px; letter-spacing: .02em; }
+    .hier .body { max-width: 60ch; color: #cdc5e6; font-size: 17px; margin: 16px 0; }
+    .hier .note { font-family: var(--f-sign); font-size: 40px; color: var(--cyan); text-shadow: 0 0 12px rgba(0,240,255,.6); transform: rotate(-5deg); display: inline-block; }
+    .hier .quote { font-family: var(--f-script); font-size: 46px; color: var(--bone); margin: 10px 0 0; }
+
+    /* components grid */
+    .comps { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+    .comp { border: 1px dashed var(--line-2); padding: 22px; position: relative; display: grid; gap: 16px; align-content: start; }
+    .comp > small { position: absolute; top: -9px; left: 14px; background: var(--bg); padding: 0 8px; font-family: var(--f-mono); font-size: 10px; color: var(--muted); letter-spacing: .14em; }
+    .c4 { grid-column: span 4; } .c5 { grid-column: span 5; } .c6 { grid-column: span 6; } .c7 { grid-column: span 7; } .c8 { grid-column: span 8; } .c12 { grid-column: span 12; }
+    .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .stamp { font-family: var(--f-black); font-size: 26px; border: 2px solid var(--magenta); color: var(--magenta); padding: 2px 14px 6px; transform: rotate(-6deg); display: inline-block; box-shadow: 0 0 16px rgba(255,43,214,.35), inset 0 0 12px rgba(255,43,214,.25); }
+    .mini-card { border: 1px solid var(--line-2); background: var(--panel); }
+    .mini-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; object-position: top left; border-bottom: 1px solid var(--line-2); }
+    .mini-card div { padding: 16px; display: grid; gap: 8px; }
+    .mini-card h4 { margin: 0; font-family: var(--f-head); font-weight: 400; font-size: 30px; }
+    .board .lap { grid-template-columns: 130px 1fr 1.3fr; padding: 18px 0; }
+    .board .offtrack { margin: 14px 10px 0; }
+    .burst-demo { min-height: 120px; display: grid; place-items: center; cursor: pointer; border: 1px solid var(--line-2); background: radial-gradient(rgba(176,38,255,.28) 1px, transparent 1.6px) 0 0 / 8px 8px; }
+    .burst-demo span { font-family: var(--f-tag); font-size: 64px; color: var(--bone); text-shadow: 0 0 10px var(--magenta), 0 0 24px rgba(255,43,214,.6), 4px 4px 0 var(--neon-deep); transform: rotate(-8deg); }
+
+    /* page flow */
+    .flow { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; counter-reset: f; }
+    .flow div { border: 1px solid var(--line-2); background: var(--panel); padding: 14px; min-height: 120px; display: grid; align-content: space-between; counter-increment: f; position: relative; }
+    .flow div::before { content: counter(f, decimal-leading-zero); font-family: var(--f-mono); font-size: 10px; color: var(--neon); }
+    .flow b { font-family: var(--f-head); font-weight: 400; font-size: 18px; }
+    .flow span { font-size: 12px; color: var(--muted); line-height: 1.35; }
+    .flow .key { border-color: var(--neon); box-shadow: 0 0 20px rgba(176,38,255,.25); }
+
+    /* launch mockup */
+    .mock { position: relative; aspect-ratio: 16 / 9; border: 1px solid var(--line-2); overflow: hidden; background: #07040f; }
+    .mock .bg { position: absolute; inset: 0; background: url("/MEDIA/bg/launch-bg.jpg") center / cover; opacity: .55; }
+    .mock .bg::after { content: ""; position: absolute; inset: 0; background: radial-gradient(80% 70% at 50% 60%, transparent, #07040f 85%); }
+    .mock h5 { position: absolute; left: 4%; right: 4%; top: 12%; margin: 0; font-family: var(--f-display); font-weight: 400; font-size: 9.6vw; line-height: 1; text-align: center; text-shadow: var(--glow); }
+    .mock img { position: absolute; right: 6%; bottom: -26%; height: 120%; filter: drop-shadow(0 0 30px rgba(176,38,255,.55)); }
+    .mock .name { position: absolute; left: 4%; bottom: 7%; font-family: var(--f-head); font-size: 2.2vw; }
+    .mock .tag { position: absolute; left: 4%; bottom: 14%; font-family: var(--f-black); font-size: 1.8vw; color: var(--magenta); }
+    .mock .ign { position: absolute; left: 50%; bottom: 4%; transform: translateX(-50%); width: 9%; }
+    @media (min-width: 1400px) { .mock h5 { font-size: 132px; } .mock .name { font-size: 30px; } .mock .tag { font-size: 24px; } }
+
+    @media (max-width: 900px) {
+      .comps > * { grid-column: span 12 !important; }
+      .spec { grid-template-columns: 1fr; }
+      .spec__meta { border-right: 0; border-bottom: 1px solid var(--line-2); }
+      .board .lap { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <!-- ===== CYBER-BRUTALIST LAYER: flat colour, hard edges, no glow ===== -->
+  <style>
+    html[data-theme="concrete"] { --bg:#0d0d0d; --panel:#171717; --panel-2:#1f1f1f; --line:#2b2b2b; --line-2:#4a4a4a; --bone:#ebe8e1; --muted:#9a968e; --neon:#c6ff00; --magenta:#ff4d00; --cyan:#ebe8e1; --neon-deep:#000; --shadow:#c6ff00; --ink-on-accent:#0d0d0d; }
+    html[data-theme="hazard"]   { --bg:#121212; --panel:#1b1b1b; --panel-2:#232323; --line:#2e2e2e; --line-2:#505050; --bone:#f2efe8; --muted:#a19c92; --neon:#3366ff; --magenta:#ffd23f; --cyan:#f2efe8; --neon-deep:#000; --shadow:#3366ff; --ink-on-accent:#121212; }
+    html[data-theme="plum"]     { --bg:#14111a; --panel:#1d1925; --panel-2:#262130; --line:#2f2a3a; --line-2:#4d4660; --bone:#e8e3ee; --muted:#9a92a8; --neon:#9d8cff; --magenta:#e4ff3a; --cyan:#e8e3ee; --neon-deep:#000; --shadow:#9d8cff; --ink-on-accent:#14111a; }
+    html[data-theme="paper"]    { --bg:#e8e4da; --panel:#f4f1ea; --panel-2:#ece8de; --line:#c9c3b6; --line-2:#0e0e0e; --bone:#0e0e0e; --muted:#5d5a54; --neon:#ff3b1f; --magenta:#1f3bff; --cyan:#0e0e0e; --neon-deep:#e8e4da; --shadow:#0e0e0e; --ink-on-accent:#0e0e0e; }
+
+    body { background: var(--bg) !important; }
+    html[data-theme="paper"] body::before { background-image: linear-gradient(to right, rgba(0,0,0,.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,.06) 1px, transparent 1px); }
+    html[data-theme="paper"] .grain { opacity: .14; mix-blend-mode: multiply; }
+
+    /* kill every glow + gradient */
+    .board *, .burst { text-shadow: none !important; }
+    .gauge__val { filter: none; }
+    .skill__bar i.on, .skill__bar i.on.hi { box-shadow: none; }
+    .skill__bar i.on.hi { background: var(--bone); }
+    .dot { box-shadow: none; }
+    .live-badge, .hero__chip, .label--red, .ticker { background: var(--neon); color: var(--ink-on-accent); }
+
+    /* hard edges, offset shadows */
+    .panel, .comp, .mini-card, .sw, .flow div, .hier, .mock, .spec { box-shadow: none; }
+    .sw, .mini-card, .hier, .mock, .flow div, .specimens { border: 2px solid var(--bone); box-shadow: 6px 6px 0 var(--shadow); }
+    .specimens { background: var(--bone); gap: 2px; }
+    .spec__meta { border-right: 2px solid var(--bone); }
+    .comp { border: 2px solid var(--line-2); border-style: solid; }
+    .comp > small { background: var(--bone); color: var(--bg); padding: 2px 8px; font-weight: 700; top: -11px; }
+    .flow .key { background: var(--neon); color: var(--ink-on-accent); box-shadow: 6px 6px 0 var(--bone); }
+    .flow .key span, .flow .key::before { color: var(--ink-on-accent); }
+
+    .btn { clip-path: none; border-width: 2px; font-style: normal; box-shadow: 4px 4px 0 var(--bone); transition: transform .12s, box-shadow .12s; }
+    .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--bone); }
+    .btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--bone); }
+    .btn--red { background: var(--neon); border-color: var(--bone); color: var(--ink-on-accent); }
+    .btn--red:hover { background: var(--neon); }
+    .btn--ghost { background: var(--bg); border-color: var(--bone); }
+    .btn--ghost:hover { background: var(--bone); color: var(--bg); }
+
+    .stamp { box-shadow: none; border-width: 3px; color: var(--magenta); border-color: var(--magenta); }
+    .stickers li { border: 2px solid var(--bone); box-shadow: 3px 3px 0 var(--bone); color: var(--bg); }
+    .stickers li:nth-child(5n+2) { background: var(--neon); color: var(--ink-on-accent); }
+    .stickers li:nth-child(5n+3) { background: var(--bg); color: var(--bone); border-color: var(--bone); box-shadow: 3px 3px 0 var(--neon); }
+    .stickers li:nth-child(5n+4) { background: var(--magenta); color: var(--ink-on-accent); }
+    html[data-theme="hazard"] .stickers li:nth-child(5n+4), html[data-theme="paper"] .stickers li:nth-child(5n+4) { color: #fff; }
+    .stickers li:nth-child(5n) { background: var(--panel); color: var(--bone); box-shadow: 3px 3px 0 var(--magenta); }
+
+    .burst, .burst-demo span { color: var(--bone); text-shadow: 4px 4px 0 var(--neon) !important; }
+    .burst-demo span { text-shadow: 4px 4px 0 var(--neon) !important; }
+    .burst-demo { background: radial-gradient(var(--line-2) 1px, transparent 1.6px) 0 0 / 8px 8px; border: 2px solid var(--bone); }
+
+    .ignite__ring { background: var(--bone); box-shadow: 6px 6px 0 var(--shadow); }
+    .ignite__ring::after { border: 2px dashed var(--bone); animation: none; inset: -8px; }
+    .ignite__core { background: var(--bg); box-shadow: 0 0 0 3px var(--bg); }
+    .ignite__core b { color: var(--neon); }
+    .ignite:hover .ignite__core { box-shadow: 0 0 0 3px var(--neon); }
+
+    .offtrack { background: #fff; box-shadow: 6px 6px 0 var(--shadow); border: 2px solid var(--bone); }
+    .offtrack::before { background: var(--neon); opacity: .85; }
+    .offtrack figcaption { color: #0e0e0e !important; }
+    .spec-card { border: 2px solid var(--bone); box-shadow: 4px 4px 0 var(--neon); }
+    .spec-card .barcode svg rect { fill: var(--bone); }
+    .feat__pos { background: var(--neon); color: var(--ink-on-accent); }
+    .lap.current .lap__big { -webkit-text-stroke-color: var(--neon); }
+    .lap__points li, .hier .body, .spec__meta p { color: var(--bone); opacity: .82; }
+    .tags li { border: 1.5px solid var(--bone); color: var(--bone); }
+
+    .b-head h1 { color: var(--bone); }
+    .b-head h1 span { background: var(--neon); color: var(--ink-on-accent); padding: 0 .12em; }
+    .b-label { border-bottom: 2px solid var(--bone); }
+    .b-label .kicker, .hier .kick { color: var(--neon); }
+    .b-label .num { background: var(--bone); color: var(--bg); padding: 2px 8px; }
+    .hier { background: var(--panel); }
+    .hier .note { color: var(--magenta); }
+    .mock .bg { opacity: .4; filter: grayscale(1) contrast(1.2); }
+    .mock .bg::after { background: linear-gradient(to top, var(--bg) 5%, transparent 60%); }
+    .mock h5 { color: var(--bone); }
+    .mock .tag { color: var(--neon); }
+    .mock img { filter: drop-shadow(10px 10px 0 rgba(0,0,0,.6)); }
+    html[data-theme="paper"] .mock { background: var(--bg); }
+
+    /* palette switcher */
+    .switch { position: sticky; top: 0; z-index: 60; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px 0; margin-bottom: 26px; background: var(--bg); border-bottom: 2px solid var(--bone); }
+    .switch span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; color: var(--muted); margin-right: 6px; }
+    .switch button { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 2px solid var(--bone); background: var(--panel); color: var(--bone); font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; box-shadow: 3px 3px 0 var(--bone); }
+    .switch button i { width: 14px; height: 14px; border: 1.5px solid var(--bone); }
+    .switch button[aria-pressed="true"] { background: var(--neon); color: var(--ink-on-accent); }
+  </style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="board">
+
+  <nav class="switch" aria-label="Palette">
+    <span>PALETTE →</span>
+    <button type="button" data-t="hazard"><i style="background:#3366ff"></i>A · Hazard Blue</button>
+    <button type="button" data-t="concrete"><i style="background:#c6ff00"></i>B · Concrete Acid</button>
+    <button type="button" data-t="plum"><i style="background:#9d8cff"></i>C · Muted Plum</button>
+    <button type="button" data-t="paper"><i style="background:#e8e4da"></i>D · Paper Brutal</button>
+  </nav>
+
+  <header class="b-head">
+    <h1><span>HYPER</span>-XZ</h1>
+    <p>UI DESIGN BOARD · V2<br />CYBER-BRUTALIST · AC-23<br />CHOSEN: A · HAZARD</p>
+  </header>
+
+  <!-- PALETTE -->
+  <section class="b-sec">
+    <div class="b-label"><span class="kicker">The</span><h2>COLOUR</h2><span class="num">01</span></div>
+    <div class="swatches" id="swatches">
+      <div class="sw"><i style="background:var(--bg)"></i><div><b>Background</b><code data-v="--bg"></code><span>page</span></div></div>
+      <div class="sw"><i style="background:var(--panel)"></i><div><b>Panel</b><code data-v="--panel"></code><span>cards, boxes</span></div></div>
+      <div class="sw"><i style="background:var(--line-2)"></i><div><b>Line</b><code data-v="--line-2"></code><span>rules, borders</span></div></div>
+      <div class="sw"><i style="background:var(--bone)"></i><div><b>Text</b><code data-v="--bone"></code><span>main text, hard borders</span></div></div>
+      <div class="sw"><i style="background:var(--muted)"></i><div><b>Muted</b><code data-v="--muted"></code><span>labels, meta</span></div></div>
+      <div class="sw"><i style="background:var(--neon)"></i><div><b>Primary accent</b><code data-v="--neon"></code><span>buttons, blocks, shadows</span></div></div>
+      <div class="sw"><i style="background:var(--magenta)"></i><div><b>Second accent</b><code data-v="--magenta"></code><span>stamps, notes — sparingly</span></div></div>
+      <div class="sw"><i style="background:var(--bg);box-shadow:inset 10px 10px 0 var(--shadow)"></i><div><b>Hard shadow</b><code data-v="--shadow"></code><span>6px offset, no blur</span></div></div>
+    </div>
+  </section>
+
+  <!-- TYPE -->
+  <section class="b-sec">
+    <div class="b-label"><span class="kicker">The</span><h2>TYPE SYSTEM</h2><span class="num">02</span></div>
+    <div class="specimens">
+      <div class="spec">
+        <div class="spec__meta"><span class="role">01 · DISPLAY</span><b>Archivo Expanded Black</b><p>Launch HYPER-XZ, section titles, footer "LIGHTS OUT". Big sizes only.</p><span class="lic">OPEN LICENCE · GOOGLE FONTS</span></div>
+        <div class="spec__demo"><span class="big" style="font-family:var(--f-display)">HYPER-XZ</span><span class="small" style="font-family:var(--f-display)">THE GARAGE · PIT LOG · TELEMETRY</span></div>
+      </div>
+      <div class="spec">
+        <div class="spec__meta"><span class="role">02 · HEADINGS + NUMBERS</span><b>Steel Frame</b><p>Your name, project titles, job roles, stats, gauges, race number.</p><span class="lic">PERSONAL USE · PUTRACETOL</span></div>
+        <div class="spec__demo"><span class="big" style="font-family:var(--f-head)">ASHISH CHOUDHURY</span><span class="small" style="font-family:var(--f-head)">APEX DASH · HYPERBOT · #23 · 92%</span></div>
+      </div>
+      <div class="spec">
+        <div class="spec__meta"><span class="role">03 · GRAFFITI</span><b>A Another Tag</b><p>Codename tag in the hero, sticker wall, comic bursts (POW! VROOM!).</p><span class="lic">CHECK LICENCE</span></div>
+        <div class="spec__demo"><span class="big" style="font-family:var(--f-tag);color:var(--bone);text-shadow:5px 5px 0 var(--neon) !important">Hyper-XZ  Kapow!</span></div>
+      </div>
+      <div class="spec">
+        <div class="spec__meta"><span class="role">04 · BLACKLETTER</span><b>Old London</b><p>Streetwear chapter labels above each section ("The Garage"), stamps and badges.</p><span class="lic">CHECK LICENCE</span></div>
+        <div class="spec__demo"><span class="big" style="font-family:var(--f-black);color:var(--neon)">The Driver · Est. 2004</span></div>
+      </div>
+      <div class="spec">
+        <div class="spec__meta"><span class="role">05 · SCRIPT (LETTERS ONLY)</span><b>Moduley</b><p>Quotes and photo captions. Never numbers — its free version swaps digits for watermark stamps.</p><span class="lic">PERSONAL USE · TYPHOON TYPE</span></div>
+        <div class="spec__demo"><span class="big" style="font-family:var(--f-script)">Off track, still racing</span></div>
+      </div>
+      <div class="spec">
+        <div class="spec__meta"><span class="role">06 · BRUSH</span><b>Hoshiko Satsuki</b><p>Footer signature and hand-written notes on cards ("my fav build").</p><span class="lic">€2 LICENCE</span></div>
+        <div class="spec__demo"><span class="big" style="font-family:var(--f-sign)">Ashish</span><span class="small" style="font-family:var(--f-sign);color:var(--magenta)">my fav build →</span></div>
+      </div>
+      <div class="spec">
+        <div class="spec__meta"><span class="role">07 · BODY + UI</span><b>Chakra Petch / JetBrains Mono</b><p>Paragraphs and buttons (Chakra), spec labels and data (Mono). Free, Google Fonts.</p><span class="lic">OPEN LICENCE</span></div>
+        <div class="spec__demo"><span style="font-size:22px">Software developer from Odisha, working where IoT, web and design meet.</span><span class="mono" style="font-size:13px;color:var(--muted)">SER: AC23-CSE-26 · STATUS: ON TRACK · IST 13:20:34</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HIERARCHY -->
+  <section class="b-sec">
+    <div class="b-label"><span class="kicker">How</span><h2>THEY STACK</h2><span class="num">03</span></div>
+    <div class="hier">
+      <span class="kick">The Garage</span>
+      <h3>APEX DASH</h3>
+      <div class="sub">F1 DASHBOARD · HARDWARE</div>
+      <p class="body">My own F1 command cockpit — race schedules, championship standings, qualifying pace and winners, paired with a physical hardware dash.</p>
+      <span class="note">my fav build ↗</span>
+      <p class="quote">Lights out and keep building</p>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section class="b-sec">
+    <div class="b-label"><span class="kicker">The</span><h2>PARTS BIN</h2><span class="num">04</span></div>
+    <div class="comps">
+      <div class="comp c7"><small>BUTTONS</small>
+        <div class="row">
+          <a class="btn btn--red" href="#">Enter the garage <span>→</span></a>
+          <a class="btn btn--ghost" href="#">Pit radio</a>
+          <a class="btn btn--red" href="#">Live <span>↗</span></a>
+        </div>
+        <div class="row">
+          <span class="live-badge"><span class="dot"></span>P1 · ON TRACK</span>
+          <span class="stamp">Approved</span>
+          <span class="hero__chip" style="padding:6px 14px;font-weight:600;text-transform:uppercase">Core Software Developer</span>
+        </div>
+      </div>
+      <div class="comp c5" style="place-items:center"><small>ENGINE START (LAUNCH CTA)</small>
+        <button class="ignite" type="button"><span class="ignite__ring"></span><span class="ignite__core"><small class="mono">ENGINE</small><b>IGNITE</b><small class="mono">STOP</small></span></button>
+      </div>
+
+      <div class="comp c7"><small>STICKER WALL · CLICK ONE</small>
+        <ul class="stickers" id="demoStickers">
+          <li style="--r:-6deg">F1</li><li style="--r:3deg">Hot Wheels</li><li style="--r:-2deg">BattleBots</li><li style="--r:5deg">Marvel</li><li style="--r:-4deg">Robotics</li>
+          <li style="--r:2deg">Comics</li><li style="--r:6deg">Memes</li><li style="--r:-3deg">Logos</li><li style="--r:4deg">Toys</li><li style="--r:-5deg">Anime</li>
+        </ul>
+      </div>
+      <div class="comp c5"><small>COMIC BURST</small>
+        <div class="burst-demo" id="burstDemo"><span>POW!</span></div>
+      </div>
+
+      <div class="comp c4"><small>GAUGE</small>
+        <div class="gauge" style="background:none;padding:0">
+          <svg viewBox="0 0 200 150" aria-hidden="true">
+            <path class="gauge__track" d="M30.72 140 A80 80 0 1 1 169.28 140" pathLength="100"/>
+            <path class="gauge__val" d="M30.72 140 A80 80 0 1 1 169.28 140" pathLength="100" style="stroke-dasharray:85 100"/>
+            <line class="gauge__needle" x1="100" y1="100" x2="44.57" y2="132" style="transform:rotate(204deg)"/>
+            <circle cx="100" cy="100" r="6" style="fill:var(--neon)"/>
+          </svg>
+          <div class="gauge__num" style="font-family:var(--f-head)">85</div>
+          <div class="gauge__label">IoT</div>
+        </div>
+      </div>
+      <div class="comp c8"><small>TELEMETRY BARS</small>
+        <div class="skills" style="grid-template-columns:1fr">
+          <div class="skill"><span class="skill__name">Arduino / ESP32</span><span class="skill__bar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on hi"></i><i></i><i></i><i></i></span><span class="skill__val">85</span></div>
+          <div class="skill"><span class="skill__name">UI / UX Design</span><span class="skill__bar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on hi"></i><i></i><i></i></span><span class="skill__val">88</span></div>
+        </div>
+      </div>
+
+      <div class="comp c6"><small>PROJECT CARD</small>
+        <div class="mini-card">
+          <img src="/MEDIA/projects/hyperbot.jpg" alt="HyperBot" />
+          <div><span class="feat__pos" style="justify-self:start;font-family:var(--f-head)">P2</span><h4>HYPERBOT</h4><ul class="tags"><li>ESP32-C3</li><li>OLED</li><li>Bluetooth</li></ul></div>
+        </div>
+      </div>
+      <div class="comp c6"><small>POLAROID + SPEC CARD</small>
+        <div class="row" style="align-items:flex-start;flex-wrap:nowrap">
+          <figure class="offtrack" style="flex:1"><img src="/MEDIA/me/mountain.jpg" alt="" /><figcaption style="font-family:var(--f-script)">Off track</figcaption></figure>
+          <div class="spec-card" style="position:static;flex:0 0 190px">
+            <div class="spec-card__row"><span>PRODUCT</span><span>DEVELOPER</span></div>
+            <div class="spec-card__row"><span>TEAM</span><span>ALPHAION</span></div>
+            <div class="spec-card__row"><span>NUMBER</span><span>#23</span></div>
+            <div class="barcode" data-code="AC23"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp c12"><small>PIT LOG ROW</small>
+        <ol class="timeline" style="border-top:0">
+          <li class="lap current">
+            <div><div class="lap__num">LAP</div><div class="lap__big" style="font-family:var(--f-head)">03</div><div class="lap__dates">2025 — Present</div></div>
+            <div><h3 class="lap__role">Core Software Developer</h3><p class="lap__company">Alphaion · India</p><span class="live-badge"><span class="dot"></span>P1 · ON TRACK</span></div>
+            <ul class="lap__points"><li>Core features for Alphaion's web and internal apps.</li><li>APIs, dashboards and automation workflows.</li></ul>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAUNCH MOCKUP -->
+  <section class="b-sec">
+    <div class="b-label"><span class="kicker">First</span><h2>IMPRESSION</h2><span class="num">05</span></div>
+    <div class="mock">
+      <div class="bg"></div>
+      <h5>HYPER-XZ</h5>
+      <span class="tag">The Driver</span>
+      <span class="name">ASHISH CHOUDHURY</span>
+      <svg class="ign" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" style="fill:var(--bone)"/><circle cx="50" cy="50" r="36" style="fill:var(--bg)"/><text x="50" y="56" text-anchor="middle" font-family="Chakra Petch" font-weight="700" font-size="16" style="fill:var(--neon)">IGNITE</text></svg>
+    </div>
+  </section>
+
+  <!-- FLOW -->
+  <section class="b-sec">
+    <div class="b-label"><span class="kicker">The</span><h2>RACE ORDER</h2><span class="num">06</span></div>
+    <div class="flow">
+      <div class="key"><b>Launch</b><span>HYPER-XZ, F1 car, engine-start button</span></div>
+      <div><b>Start lights</b><span>5 lights, lights out</span></div>
+      <div class="key"><b>Hero poster</b><span>Name, codename tag, Red Bull photo</span></div>
+      <div><b>Ticker</b><span>Interests on a neon strip</span></div>
+      <div><b>Driver profile</b><span>About, spec sheet, sticker wall, polaroid</span></div>
+      <div class="key"><b>The garage</b><span>Apex Dash + HyperBot</span></div>
+      <div><b>Pit log</b><span>Alphaion ×2, HAL</span></div>
+      <div><b>Telemetry</b><span>Gauges + skill bars</span></div>
+      <div><b>Instagram</b><span>@ashish_23.01</span></div>
+      <div><b>Pit radio</b><span>Email, socials, form, resume</span></div>
+      <div><b>Footer</b><span>LIGHTS OUT + signature</span></div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const setTheme = (t) => {
+    root.dataset.theme = t; localStorage.setItem("ac-board-theme", t);
+    document.querySelectorAll(".switch button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.t === t));
+    const cs = getComputedStyle(root);
+    document.querySelectorAll("#swatches code").forEach((c) => (c.textContent = cs.getPropertyValue(c.dataset.v).trim().toUpperCase()));
+  };
+  document.querySelectorAll(".switch button").forEach((b) => b.addEventListener("click", () => setTheme(b.dataset.t)));
+  setTheme(localStorage.getItem("ac-board-theme") || "hazard");
+  document.querySelectorAll(".barcode").forEach((el) => {
+    let s = [...(el.dataset.code || "AC")].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7), x = 0, r = "";
+    const rnd = () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
+    while (x < 196) { const w = 1 + Math.floor(rnd() * 3); r += `<rect x="${x}" width="${w}" height="20" fill="currentColor"/>`; x += w + 1 + Math.floor(rnd() * 3); }
+    el.innerHTML = `<svg viewBox="0 0 200 20" preserveAspectRatio="none">${r}</svg>`;
+  });
+  const words = ["POW!", "VROOM!", "ZAP!", "KABOOM!", "NITRO!", "KAPOW!", "GG!", "DRS!"];
+  const pop = (x, y) => {
+    const el = document.createElement("span"); el.className = "burst";
+    el.textContent = words[Math.floor(Math.random() * words.length)];
+    el.style.left = x + "px"; el.style.top = y + "px"; el.style.setProperty("--r", (Math.random() * 24 - 12 | 0) + "deg");
+    document.body.appendChild(el); setTimeout(() => el.remove(), 950);
+  };
+  document.getElementById("demoStickers").addEventListener("click", (e) => e.target.closest("li") && pop(e.clientX, e.clientY));
+  document.getElementById("burstDemo").addEventListener("click", (e) => pop(e.clientX, e.clientY));
+</script>
+</body>
+</html>

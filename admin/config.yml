@@ -1,0 +1,150 @@
+# Decap CMS — edit your portfolio at https://<your-site>/admin
+# Login uses GitHub through Netlify's OAuth provider (see README).
+backend:
+  name: github
+  repo: ashish22cse221/my-portfolio
+  branch: main
+
+# Uncomment to edit locally without logging in: run `npx decap-server` in the repo, then open /admin
+# local_backend: true
+
+media_folder: "MEDIA/uploads"
+public_folder: "/MEDIA/uploads"
+
+collections:
+  - name: "site"
+    label: "Portfolio"
+    files:
+      - name: "content"
+        label: "All content"
+        file: "content/site.json"
+        format: "json"
+        fields:
+          - label: "Profile"
+            name: "profile"
+            widget: "object"
+            fields:
+              - { label: "First name", name: "firstName", widget: "string" }
+              - { label: "Last name", name: "lastName", widget: "string" }
+              - { label: "Name in katakana", name: "katakana", widget: "string", required: false }
+              - { label: "Race number", name: "number", widget: "string", required: false }
+              - { label: "Current role", name: "role", widget: "string" }
+              - { label: "Current team / company", name: "team", widget: "string" }
+              - { label: "Tagline / codename", name: "tagline", widget: "string", hint: "Shown huge on the launch screen and hero, e.g. HYPER-XZ" }
+              - { label: "About", name: "about", widget: "text" }
+              - { label: "Location", name: "location", widget: "string" }
+              - { label: "Hero photo", name: "photo", widget: "image" }
+              - { label: "Polaroid photo", name: "photo2", widget: "image", required: false }
+              - { label: "Polaroid caption (letters only)", name: "photo2Caption", widget: "string", required: false }
+              - { label: "Resume (PDF)", name: "resume", widget: "file", required: false, hint: "Upload a version without home address / phone / family details — this file is public." }
+              - { label: "Open to work", name: "available", widget: "boolean", default: true }
+              - { label: "Interests (sticker wall)", name: "interests", widget: "list" }
+          - label: "Launch screen"
+            name: "launch"
+            widget: "object"
+            fields:
+              - { label: "Top-left text", name: "kicker", widget: "string" }
+              - { label: "Button word", name: "button", widget: "string", hint: "Shown on the engine start button" }
+              - { label: "Background image", name: "background", widget: "image" }
+          - label: "Social links"
+            name: "socials"
+            widget: "object"
+            fields:
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+              - { label: "Instagram handle", name: "instagramHandle", widget: "string", required: false }
+              - { label: "GitHub URL", name: "github", widget: "string", required: false }
+              - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }
+          - label: "Experience (newest first)"
+            name: "experience"
+            widget: "list"
+            summary: "{{fields.role}} — {{fields.company}}"
+            fields:
+              - { label: "Company", name: "company", widget: "string" }
+              - { label: "Role", name: "role", widget: "string" }
+              - { label: "Start", name: "start", widget: "string", hint: "e.g. May 2025" }
+              - { label: "End", name: "end", widget: "string", hint: "e.g. Jun 2025 or Present" }
+              - { label: "Current role", name: "current", widget: "boolean", default: false }
+              - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Highlights", name: "points", widget: "list" }
+          - label: "Projects"
+            name: "projects"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Category", name: "category", widget: "string" }
+              - { label: "Featured (big card)", name: "featured", widget: "boolean", default: false }
+              - { label: "Summary", name: "summary", widget: "text" }
+              - { label: "Image", name: "image", widget: "image", required: false }
+              - { label: "Live link", name: "live", widget: "string", required: false }
+              - { label: "Code link", name: "repo", widget: "string", required: false }
+              - { label: "Tags", name: "tags", widget: "list", required: false }
+              - label: "Spec rows"
+                name: "specs"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Value", name: "value", widget: "string" }
+          - label: "Skills"
+            name: "skills"
+            widget: "list"
+            summary: "{{fields.name}} · {{fields.level}}"
+            fields:
+              - { label: "Skill", name: "name", widget: "string" }
+              - { label: "Level (0–100)", name: "level", widget: "number", value_type: "int", min: 0, max: 100 }
+              - { label: "Group", name: "group", widget: "string" }
+          - label: "Stats strip"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "Value", name: "value", widget: "string", hint: "e.g. 3, 9+, 8.1" }
+              - { label: "Label", name: "label", widget: "string" }
+          - label: "Services (Build Menu)"
+            name: "services"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Summary", name: "summary", widget: "text" }
+              - { label: "Tags", name: "tags", widget: "list", required: false }
+          - label: "Process (Race Strategy)"
+            name: "process"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Step", name: "title", widget: "string" }
+              - { label: "Summary", name: "summary", widget: "string" }
+          - label: "Trophy cabinet"
+            name: "trophies"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Note", name: "note", widget: "string" }
+          - { label: "Toolbox (tech decals)", name: "toolbox", widget: "list" }
+          - label: "Education"
+            name: "education"
+            widget: "list"
+            fields:
+              - { label: "Degree", name: "title", widget: "string" }
+              - { label: "Institution", name: "place", widget: "string" }
+              - { label: "Period", name: "period", widget: "string" }
+              - { label: "Note", name: "note", widget: "string", required: false }
+          - { label: "Certifications", name: "certifications", widget: "list" }
+          - { label: "Positions & achievements", name: "positions", widget: "list" }
+          - label: "Instagram posts (shown on the site)"
+            name: "instagramPosts"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Post link", name: "link", widget: "string" }
+              - { label: "Caption", name: "caption", widget: "string", required: false }
+          - label: "Contact"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Formspree endpoint", name: "formEndpoint", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }

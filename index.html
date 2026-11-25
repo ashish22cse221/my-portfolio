@@ -1,315 +1,314 @@
-<!DOCTYPE html>
-<html class="dark" lang="en">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Ashish Choudhury | Digital Creator</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#ff6a00",
-                        "background-light": "#f4f2f1",
-                        "background-dark": "#0a0a0a",
-                    },
-                    fontFamily: {
-                        "display": ["Space Grotesk", "sans-serif"]
-                    },
-                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
-                },
-            },
-        }
-    </script>
-<style>
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: #0a0a0a;
-            overflow-x: hidden;
-        }
-        .comic-panel {
-            border: 6px solid #0a0a0a;
-            box-shadow: 0 0 0 2px rgba(255, 106, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        .text-texture {
-            background: linear-gradient(45deg, #ff6a00 25%, #ff9e00 50%, #ff6a00 75%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0px 0px 15px rgba(255, 106, 0, 0.4));
-        }
-        .light-leak {
-            background: radial-gradient(circle at center, rgba(255, 106, 0, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .dust-particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 106, 0, 0.3);
-            border-radius: 50%;
-        }
-        .glow-button {
-            box-shadow: 0 0 30px rgba(255, 106, 0, 0.6);
-        }
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            height: 100vh;
-            gap: 0px;
-        }
-        .skew-panel {
-            clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
-        }
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        .animate-slide-left {
-            animation: slideInLeft 0.8s ease-out forwards;
-        }
-        .animate-slide-right {
-            animation: slideInRight 0.8s ease-out forwards;
-        }
-        .animate-slide-up {
-            animation: slideInUp 0.8s ease-out forwards;
-        }
-        .animate-fade {
-            animation: fadeIn 1s ease-out forwards;
-        }
-        .delay-1 { animation-delay: 0.1s; opacity: 0; }
-        .delay-2 { animation-delay: 0.2s; opacity: 0; }
-        .delay-3 { animation-delay: 0.3s; opacity: 0; }
-        .delay-4 { animation-delay: 0.4s; opacity: 0; }
-        .delay-5 { animation-delay: 0.5s; opacity: 0; }
-        .typing-text {
-            overflow: hidden;
-            border-right: 3px solid #ff6a00;
-            white-space: nowrap;
-            animation: typing 2s steps(40, end) 0.8s forwards, blink 0.75s step-end infinite;
-            width: 0;
-        }
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        @keyframes blink {
-            from, to { border-color: transparent; }
-            50% { border-color: #ff6a00; }
-        }
-        /* Mobile Optimizations */
-        @media (max-width: 768px) {
-            .comic-panel {
-                border: 4px solid #0a0a0a;
-            }
-            .mobile-stack {
-                display: flex;
-                flex-direction: column;
-            }
-        }
-        /* Tablet and Small Laptop */
-        @media (min-width: 769px) and (max-width: 1280px) {
-            .grid-layout-tablet {
-                grid-template-columns: repeat(8, 1fr);
-            }
-        }
-        /* Large Desktop */
-        @media (min-width: 1920px) {
-            body {
-                font-size: 18px;
-            }
-        }
-    </style>
-<script>
-        // Typing animation for specific elements
-        window.addEventListener('load', function() {
-            const typingElements = document.querySelectorAll('.typing-animate');
-            typingElements.forEach((el, index) => {
-                const text = el.textContent;
-                el.textContent = '';
-                el.style.display = 'inline-block';
-                
-                setTimeout(() => {
-                    let i = 0;
-                    const timer = setInterval(() => {
-                        if (i < text.length) {
-                            el.textContent += text.charAt(i);
-                            i++;
-                        } else {
-                            clearInterval(timer);
-                        }
-                    }, 80);
-                }, 800 + (index * 400));
-            });
-        });
-    </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ashish Choudhury — Software Developer · IoT · Design</title>
+  <meta name="description" content="Ashish Choudhury — core software developer at Alphaion. IoT builds, F1 dashboards, desk robots, web and design." />
+  <meta property="og:title" content="Ashish Choudhury — Software Developer" />
+  <meta property="og:description" content="IoT builds, F1 dashboards, desk robots, web and design." />
+  <meta property="og:image" content="/MEDIA/projects/apexdash.jpg" />
+  <meta name="theme-color" content="#121212" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%233366FF'/%3E%3Ctext x='16' y='23' font-family='Arial Black,Arial' font-weight='900' font-size='17' text-anchor='middle' fill='%23121212'%3EAC%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,700..900&family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,600;1,700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+JP:wght@700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
-<body class="bg-background-light dark:bg-background-dark text-white font-display">
-<!-- Atmospheric Layer -->
-<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-<div class="light-leak absolute top-[-10%] left-[-5%] w-[50%] h-[50%]"></div>
-<div class="light-leak absolute bottom-[-10%] right-[-5%] w-[60%] h-[60%]"></div>
-<!-- Simulated dust (visual only) -->
-<div class="dust-particle top-1/4 left-1/3"></div>
-<div class="dust-particle top-1/2 left-2/3"></div>
-<div class="dust-particle top-3/4 left-1/4"></div>
-<div class="dust-particle top-1/3 left-1/2"></div>
-</div>
-<!-- Dynamic Panel Container -->
-<main class="relative z-10 w-full h-screen p-2 md:p-6 lg:p-10">
-<div class="grid grid-cols-1 md:grid-cols-12 grid-rows-6 md:grid-rows-12 h-full gap-2">
-<!-- PANEL 1: TYPOGRAPHY (NAME) -->
-<div class="md:col-span-8 md:row-span-7 comic-panel bg-neutral-900 flex items-center justify-center p-8 animate-slide-left delay-1">
-            <div class="relative z-10 w-full">
-<p class="text-primary text-xs md:text-sm font-black tracking-[0.3em] mb-2 uppercase opacity-80">Creative Developer:</p>
-<h1 class="text-5xl md:text-7xl lg:text-9xl font-black text-texture leading-none tracking-tighter uppercase italic">
-                        <span class="typing-animate">ASHISH</span><br/><span class="typing-animate">CHOUDHURY</span>
-                    </h1>
-<div class="mt-6 md:mt-8 flex items-center gap-4">
-<div class="h-[2px] w-16 md:w-24 bg-primary"></div>
-<span class="text-[10px] md:text-xs font-bold tracking-widest opacity-60 uppercase">UI/UX · Web Dev · Design</span>
-</div>
-</div>
-<!-- Abstract Comic Background Overlay -->
-<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#ff6a00 1px, transparent 1px); background-size: 10px 10px;"></div>
-</div>
-<!-- PANEL 2: 3D SPHERE (INTERACTIVE AREA) -->
-<div class="md:col-span-4 md:row-span-5 comic-panel bg-background-dark group flex flex-col items-center justify-center relative animate-slide-right delay-2">
-<!-- Sphere Container -->
-<div class="relative w-48 h-48 md:w-56 md:h-56 flex items-center justify-center">
-<div class="absolute inset-0 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
-<div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-primary/40 flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
-<div class="absolute inset-0 bg-gradient-to-br from-primary via-orange-400 to-black opacity-90"></div>
-<!-- Spark effects represented as stylized lines -->
-<div class="absolute top-0 left-1/2 w-[1px] h-full bg-white/40 rotate-45"></div>
-<div class="absolute top-0 left-1/2 w-[1px] h-full bg-white/40 -rotate-45"></div>
-<div class="w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30"></div>
-</div>
-<!-- Stats Overlay -->
-<div class="absolute bottom-[-15px] bg-[#4b3220] px-3 py-1.5 border border-primary/50 flex flex-col items-center">
-<span class="text-[8px] md:text-[10px] uppercase font-bold text-primary tracking-widest">Code Quality</span>
-<span class="text-[10px] md:text-xs font-mono">OPTIMAL: 100%</span>
-</div>
-</div>
-</div>
-<!-- PANEL 3: LATEST PROJECT -->
-<div class="md:col-span-4 md:row-span-7 comic-panel bg-neutral-800 flex flex-col justify-end p-0 group overflow-hidden animate-slide-right delay-3">
-<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Modern web development workspace" style="background-image: linear-gradient(to top, #0a0a0a 20%, transparent 100%), url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80');">
-</div>
-            <div class="relative p-4 md:p-6 z-20">
-<span class="bg-primary text-black text-[9px] md:text-[10px] font-black px-2 py-1 uppercase mb-3 inline-block">Latest Project</span>
-<h3 class="text-2xl md:text-3xl font-black uppercase leading-tight"><span class="typing-animate">Interactive</span><br/><span class="typing-animate">Web Apps</span></h3>
-<p class="text-[10px] md:text-xs mt-2 opacity-70 max-w-[200px]">Building responsive, user-centric experiences with modern frameworks.</p>
-<div class="mt-3 md:mt-4 flex gap-2 items-center">
-<span class="material-symbols-outlined text-primary text-sm">arrow_forward_ios</span>
-<span class="text-[9px] md:text-[10px] font-bold uppercase tracking-widest border-b border-primary/30">View Portfolio</span>
-</div>
-</div>
-</div>
-<!-- PANEL 4: SKILLS / STATS -->
-<div class="md:col-span-3 md:row-span-5 comic-panel bg-neutral-900 p-4 md:p-6 flex flex-col justify-center gap-3 md:gap-4 animate-slide-up delay-4">
-            <div class="border-l-4 border-primary pl-3 md:pl-4">
-<h4 class="text-primary text-xl md:text-2xl font-black italic uppercase leading-none"><span class="typing-animate">Tech Stack</span></h4>
-<p class="text-[9px] md:text-[10px] uppercase tracking-tighter opacity-50 mt-1">Always Learning</p>
-</div>
-<div class="grid grid-cols-2 gap-2 mt-2">
-<div class="bg-white/5 p-2 md:p-3 rounded">
-<p class="text-[7px] md:text-[8px] uppercase font-bold opacity-40">Languages</p>
-<p class="text-lg md:text-xl font-black">8+</p>
-</div>
-<div class="bg-white/5 p-2 md:p-3 rounded">
-<p class="text-[7px] md:text-[8px] uppercase font-bold opacity-40">Experience</p>
-<p class="text-lg md:text-xl font-black text-primary">Pro</p>
-</div>
-</div>
-<div class="mt-1 md:mt-2 space-y-1">
-<p class="text-[8px] md:text-[9px] font-mono opacity-60">HTML · CSS · JS · Python</p>
-<p class="text-[8px] md:text-[9px] font-mono opacity-60">C · Arduino · PHP · MySQL</p>
-</div>
-</div>
-<!-- PANEL 5: SMALL ACCENT PANEL -->
-<div class="md:col-span-5 md:row-span-5 comic-panel bg-primary flex items-center justify-center relative overflow-hidden group animate-slide-up delay-5">
-<div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/asfalt-dark.png')]"></div>
-<div class="text-center group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-black text-5xl md:text-6xl opacity-80 font-black">palette</span>
-</div>
-<div class="absolute bottom-2 right-2 flex flex-col items-end">
-<span class="text-black text-[9px] md:text-[10px] font-black uppercase tracking-tighter">Design + Code</span>
-<span class="text-black/60 text-[7px] md:text-[8px] font-bold uppercase leading-none">Canva Expert</span>
-</div>
-</div>
-</div>
-<!-- CENTRAL ACTION BUTTON -->
-<!-- Positioned at the intersection of panels 1, 2, 4, 5 -->
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 animate-fade delay-5">
-<button onclick="window.location.href='hello.html'" class="glow-button flex flex-col items-center justify-center w-36 h-36 md:w-48 md:h-48 lg:w-56 lg:h-56 bg-primary rounded-full border-8 md:border-[12px] border-background-dark hover:scale-110 transition-transform active:scale-95 group cursor-pointer">
-<span class="material-symbols-outlined text-white text-3xl md:text-4xl mb-1 group-hover:rotate-12 transition-transform">play_arrow</span>
-<span class="text-white text-xs md:text-sm lg:text-lg font-black uppercase text-center leading-none tracking-tighter px-4">
-                    Explore My<br/>Work
-                </span>
-<div class="absolute inset-0 rounded-full border-2 border-white/20 animate-ping opacity-20"></div>
-</button>
-</div>
-</main>
-<!-- UI Overlay Elements -->
-<div class="hidden md:flex fixed bottom-6 lg:bottom-10 left-6 lg:left-10 z-50 gap-4">
-<div class="flex flex-col">
-<span class="text-[8px] lg:text-[9px] uppercase font-bold opacity-40 tracking-widest">Location</span>
-<span class="text-xs lg:text-sm font-mono text-primary" data-location="Bhubaneswar, India">Bhubaneswar, Odisha</span>
-</div>
-</div>
-<div class="hidden md:flex fixed bottom-6 lg:bottom-10 right-6 lg:right-10 z-50 flex-col items-end">
-<div class="flex gap-3 lg:gap-4 mb-2">
-<a class="w-7 h-7 lg:w-8 lg:h-8 flex items-center justify-center border border-white/20 rounded-full hover:bg-primary hover:text-black transition-all" href="#">
-<span class="material-symbols-outlined text-xs lg:text-sm">alternate_email</span>
-</a>
-<a class="w-7 h-7 lg:w-8 lg:h-8 flex items-center justify-center border border-white/20 rounded-full hover:bg-primary hover:text-black transition-all" href="#">
-<span class="material-symbols-outlined text-xs lg:text-sm">share</span>
-</a>
-</div>
-<p class="text-[7px] lg:text-[8px] uppercase font-bold opacity-30 tracking-[0.3em] lg:tracking-[0.4em]">© 2024 ASHISH CHOUDHURY</p>
-</div>
+<body>
+  <!-- LAUNCH SCREEN -->
+  <section class="launch" id="launch" aria-label="Launch screen">
+    <div class="launch__bg" id="launchBg"></div>
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <div class="launch__top mono">
+      <span id="launchKicker">DRIVER // AC-23 // BUILD 2026</span>
+      <span class="launch__blink">● SYSTEMS ARMED</span>
+      <span id="launchClock">IST --:--:--</span>
+    </div>
+    <div class="launch__stage">
+      <h1 class="launch__title"><span class="launch__kick">The Driver</span><span class="fit giant" data-bind="tagline">HYPER-XZ</span></h1>
+    </div>
+    <div class="launch__bottom">
+      <div class="launch__who">
+        <p class="launch__name"><span data-bind="firstName">Ashish</span> <span data-bind="lastName">Choudhury</span></p>
+        <p class="mono launch__role"><span data-bind="role">Core Software Developer</span> · <span data-bind="team">Alphaion</span></p>
+        <div class="barcode" data-code="HYPERXZ"></div>
+      </div>
+      <button class="ignite" id="igniteBtn" type="button" aria-label="Enter the site">
+        <span class="ignite__ring"></span>
+        <span class="ignite__core">
+          <small class="mono">ENGINE</small>
+          <b id="igniteLabel">START</b>
+          <small class="mono">STOP</small>
+        </span>
+      </button>
+      <p class="launch__hint mono">PRESS <kbd>ENTER</kbd> OR HIT THE BUTTON</p>
+    </div>
+  </section>
+
+  <!-- START LIGHTS LOADER -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="gantry" id="gantry">
+      <div class="gantry__beam"><b></b><b></b><b></b><b></b><b></b><b></b></div>
+      <div class="gantry__pods">
+        <div class="pod"><i></i><i></i><i class="red"></i><i class="red"></i></div>
+        <div class="pod"><i></i><i></i><i class="red"></i><i class="red"></i></div>
+        <div class="pod"><i></i><i></i><i class="red"></i><i class="red"></i></div>
+        <div class="pod"><i></i><i></i><i class="red"></i><i class="red"></i></div>
+        <div class="pod"><i></i><i></i><i class="red"></i><i class="red"></i></div>
+      </div>
+    </div>
+    <p class="loader__text mono" id="loaderText">FORMATION LAP</p>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><span></span></div>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+    <a href="#top" class="nav__logo" aria-label="Home">
+      <span class="nav__badge">AC</span>
+      <span class="nav__num mono" data-bind="number" data-prefix="#">#23</span>
+    </a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#profile"><i>01</i>Profile</a>
+      <a href="#garage"><i>02</i>Garage</a>
+      <a href="#services"><i>03</i>Services</a>
+      <a href="#pitlog"><i>05</i>Pit Log</a>
+      <a href="#trophies"><i>06</i>Trophies</a>
+      <a href="#telemetry"><i>07</i>Telemetry</a>
+      <a href="#radio"><i>08</i>Pit Radio</a>
+    </nav>
+    <div class="nav__status mono">
+      <span class="dot"></span><span id="clock">--:--:--</span>
+    </div>
+    <button class="nav__menu" id="menuBtn" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  </header>
+
+  <main id="top">
+    <!-- HERO / POSTER -->
+    <section class="hero" id="hero">
+      <div class="hero__frame">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+
+        <div class="hero__strip">
+          <div class="label label--red">
+            <div class="label__head"><b>AC—23</b><span class="label__ring"></span></div>
+            <p class="mono">DRIVER DATABASE<br />RAW DATA · BUILD 2026</p>
+            <div class="barcode" data-code="ASHISHCHOUDHURY"></div>
+            <p class="mono tiny">MADE IN ODISHA, INDIA</p>
+          </div>
+          <div class="statusbar">
+            <span class="battery"><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="statusbar__text">MOVEMENT</span>
+            <span class="statusbar__pct mono" id="pct">0.0%</span>
+          </div>
+          <div class="label label--red label--wide">
+            <p class="mono">SER: AC23-CSE-26 · <span data-bind="team">ALPHAION</span><br />STATUS: <span data-bind="statusText">ON TRACK</span></p>
+            <div class="barcode" data-code="CORESOFTWAREDEV"></div>
+          </div>
+        </div>
+
+        <h1 class="hero__name">
+          <span class="fit giant" data-bind="firstName">ASHISH</span>
+        </h1>
+
+        <div class="hero__info">
+          <span class="hero__chip" data-bind="role">Core Software Developer</span>
+          <span>IOT — WEB — DESIGN</span>
+          <span class="hide-sm">AC© <span id="yy">26</span></span>
+        </div>
+
+        <div class="hero__body">
+          <div class="hero__copy">
+            <p class="jp" data-bind="katakana">アシシュ・チョウドリー</p>
+            <div class="codename">
+              <span class="codename__label mono">CODENAME</span>
+              <p class="codename__name" data-bind="tagline" data-text="HYPER-XZ">HYPER-XZ</p>
+            </div>
+            <div class="hero__ctas">
+              <a href="#garage" class="btn btn--red">Enter the garage <span>→</span></a>
+              <a href="#radio" class="btn btn--ghost">Pit radio</a>
+            </div>
+            <div class="caution mono"><b>⚠</b> CAUTION · HOT PARTS · AUTHORISED BUILDERS ONLY</div>
+            <div class="hero__ticks mono">
+              <span>GAMING</span><span>CARS</span><span>BIKES</span><span>ANIME</span><span>F1</span>
+            </div>
+          </div>
+          <div class="hero__visual">
+            <span class="hero__bignum outline" data-bind="number">23</span>
+            <span class="hero__stamp">Certified Builder</span>
+            <figure class="duotone">
+              <img data-bind-src="photo" src="/MEDIA/me/dp.jpg" alt="Portrait of Ashish Choudhury" />
+            </figure>
+            <div class="spec-card">
+              <div class="spec-card__row"><span>PRODUCT</span><span>DEVELOPER</span></div>
+              <div class="spec-card__row"><span>TEAM</span><span data-bind="team">ALPHAION</span></div>
+              <div class="spec-card__row"><span>BASE</span><span data-bind="location">ODISHA</span></div>
+              <div class="barcode" data-code="AC23"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__last">
+          <span class="fit giant giant--bone" data-bind="lastName">CHOUDHURY</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TICKER -->
+    <div class="crossing" aria-hidden="true">
+      <div class="ticker ticker--a"><div class="ticker__track" id="ticker"></div></div>
+      <div class="ticker ticker--b"><div class="ticker__track" id="ticker2"></div></div>
+    </div>
+
+    <!-- STATS STRIP -->
+    <section class="stats" id="stats" aria-label="Quick stats"></section>
+
+    <!-- 01 PROFILE -->
+    <section class="section" id="profile">
+      <header class="sec-head reveal">
+        <span class="sec-head__num mono">01 /</span>
+        <div><span class="sec-head__kick">The Driver</span><h2 class="sec-head__title" data-text="DRIVER PROFILE">DRIVER PROFILE</h2></div>
+        <div class="barcode sec-head__bar" data-code="PROFILE"></div>
+      </header>
+
+      <div class="profile">
+        <div class="profile__sheet panel reveal">
+          <div class="panel__tag mono">SPEC SHEET · AC-23</div>
+          <p class="profile__about" data-bind="about"></p>
+          <dl class="spec-table" id="specTable"></dl>
+        </div>
+        <div class="profile__side">
+          <div class="panel panel--wall reveal">
+            <div class="panel__tag mono">STICKER BOMB · CLICK ONE</div>
+            <ul class="stickers" id="interests"></ul>
+          </div>
+          <figure class="offtrack reveal">
+            <img data-bind-src="photo2" src="/MEDIA/me/redbull.jpg" alt="Ashish at a Red Bull F1 showcase" loading="lazy" />
+            <figcaption><span data-bind="photo2Caption">Red Bull showcase</span><small>// PIT LANE VISIT</small></figcaption>
+          </figure>
+          <div class="panel reveal">
+            <div class="panel__tag mono">PADDOCK CREDENTIALS</div>
+            <div id="credentials" class="creds"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 GARAGE -->
+    <section class="section" id="garage">
+      <header class="sec-head reveal">
+        <span class="sec-head__num mono">02 /</span>
+        <div><span class="sec-head__kick">The Builds</span><h2 class="sec-head__title" data-text="THE GARAGE">THE GARAGE</h2></div>
+        <div class="barcode sec-head__bar" data-code="GARAGE"></div>
+      </header>
+      <div id="featured" class="featured"></div>
+    </section>
+
+    <!-- 03 SERVICES -->
+    <section class="section" id="services">
+      <header class="sec-head reveal">
+        <span class="sec-head__num mono">03 /</span>
+        <div><span class="sec-head__kick">The Menu</span><h2 class="sec-head__title" data-text="BUILD MENU">BUILD MENU</h2></div>
+        <div class="barcode sec-head__bar" data-code="SERVICES"></div>
+      </header>
+      <div id="serviceGrid" class="services"></div>
+    </section>
+
+    <!-- 04 PROCESS -->
+    <section class="section" id="process">
+      <header class="sec-head reveal">
+        <span class="sec-head__num mono">04 /</span>
+        <div><span class="sec-head__kick">The Strategy</span><h2 class="sec-head__title" data-text="RACE STRATEGY">RACE STRATEGY</h2></div>
+        <div class="barcode sec-head__bar" data-code="PROCESS"></div>
+      </header>
+      <ol id="processTrack" class="process"></ol>
+    </section>
+
+    <!-- 05 PIT LOG -->
+    <section class="section" id="pitlog">
+      <header class="sec-head reveal">
+        <span class="sec-head__num mono">05 /</span>
+        <div><span class="sec-head__kick">The Laps</span><h2 class="sec-head__title" data-text="PIT LOG">PIT LOG</h2></div>
+        <div class="barcode sec-head__bar" data-code="EXPERIENCE"></div>
+      </header>
+      <ol id="timeline" class="timeline"></ol>
+    </section>
+
+    <!-- 06 TROPHIES -->
+    <section class="section" id="trophies">
+      <header class="sec-head reveal">
+        <span class="sec-head__num mono">06 /</span>
+        <div><span class="sec-head__kick">The Silverware</span><h2 class="sec-head__title" data-text="TROPHY CABINET">TROPHY CABINET</h2></div>
+        <div class="barcode sec-head__bar" data-code="TROPHIES"></div>
+      </header>
+      <div id="trophyGrid" class="trophies"></div>
+    </section>
+
+    <!-- 07 TELEMETRY -->
+    <section class="section" id="telemetry">
+      <header class="sec-head reveal">
+        <span class="sec-head__num mono">07 /</span>
+        <div><span class="sec-head__kick">The Data</span><h2 class="sec-head__title" data-text="TELEMETRY">TELEMETRY</h2></div>
+        <div class="barcode sec-head__bar" data-code="SKILLS"></div>
+      </header>
+      <div id="gauges" class="gauges"></div>
+      <div id="skills" class="skills"></div>
+      <div class="sub-head mono reveal"><span>// TOOLBOX</span><i></i></div>
+      <ul id="toolbox" class="toolbox"></ul>
+    </section>
+
+    <!-- INSTAGRAM -->
+    <section class="section section--tight" id="instagram">
+      <a class="insta reveal" id="instaLink" href="#" target="_blank" rel="noopener">
+        <span class="insta__label mono">FOLLOW THE BUILD ↗</span>
+        <span class="fit giant giant--outline" id="instaHandle">@ASHISH_23.01</span>
+        <span class="insta__sub mono">CARS · BIKES · DESIGN · BEHIND THE SCENES</span>
+      </a>
+      <div id="instaGrid" class="insta-grid"></div>
+    </section>
+
+    <!-- 05 PIT RADIO -->
+    <section class="section" id="radio">
+      <header class="sec-head reveal">
+        <span class="sec-head__num mono">08 /</span>
+        <div><span class="sec-head__kick">The Line</span><h2 class="sec-head__title" data-text="PIT RADIO">PIT RADIO</h2></div>
+        <div class="barcode sec-head__bar" data-code="CONTACT"></div>
+      </header>
+      <div class="radio">
+        <div class="radio__left reveal">
+          <p class="radio__headline" data-bind="contactHeadline">Got a build in mind?</p>
+          <button class="radio__email" id="emailBtn" type="button">
+            <span id="emailText">email</span>
+            <small class="mono" id="emailHint">CLICK TO COPY</small>
+          </button>
+          <div class="radio__links" id="socialLinks"></div>
+          <a class="btn btn--red btn--block" id="resumeBtn" href="#" download hidden>Download spec sheet (resume) <span>↓</span></a>
+        </div>
+        <form class="radio__form panel reveal" id="radioForm" method="POST">
+          <div class="panel__tag mono">TRANSMIT · CH-23</div>
+          <label><span class="mono">CALLSIGN</span><input name="name" required autocomplete="name" placeholder="Your name" /></label>
+          <label><span class="mono">FREQUENCY (EMAIL)</span><input name="email" type="email" required autocomplete="email" placeholder="you@domain.com" /></label>
+          <label><span class="mono">MESSAGE</span><textarea name="message" rows="5" required placeholder="Tell me about the project…"></textarea></label>
+          <button class="btn btn--red btn--block" type="submit" id="sendBtn">Send transmission <span>⚡</span></button>
+          <p class="form-status mono" id="formStatus" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="fit giant giant--outline">LIGHTS OUT</span>
+    <span class="signature">Ashish</span>
+    <div class="footer__row mono">
+      <span>© <span id="year">2026</span> ASHISH CHOUDHURY</span>
+      <span class="hide-sm">DESIGNED &amp; BUILT IN-HOUSE · NO PIT STOPS</span>
+      <a href="#top">BACK TO GRID ↑</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js" defer></script>
 </body>
 </html>
